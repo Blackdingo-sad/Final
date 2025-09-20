@@ -1,0 +1,29 @@
+# --- Unity ---
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+Assets/AssetStoreTools*
+
+# --- IDE / Editor ---
+.vs/
+.idea/
+*.csproj
+*.sln
+*.user
+*.userprefs
+*.pidb
+*.opendb
+*.VC.db
+
+# --- OS / Misc ---
+.DS_Store
+Thumbs.db
+
+# --- Output ---
+*.apk
+*.aab
