@@ -47,19 +47,21 @@ public class PlayerController2D : MonoBehaviour
         // Nên gán PhysicsMaterial2D (friction ~0) cho collider để tránh "dính tường"
         if (groundCheck == null)
             Debug.LogWarning("[PlayerController2D] groundCheck = NULL (hãy kéo 1 empty dưới chân vào).");
+        if (!sprite) sprite = GetComponentInChildren<SpriteRenderer>();
+        if (!animator) animator = GetComponent<Animator>();   
     }
 
     bool IsGrounded()
     {
-        // 1) Ưu tiên OverlapCircle tại điểm groundCheck
+        // Ưu tiên OverlapCircle tại điểm groundCheck
         if (groundCheck && Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer))
             return true;
 
-        // 2) Nếu vẫn chưa, kiểm tra va chạm trực tiếp của collider với groundLayer
+        // kiểm tra va chạm trực tiếp của collider với groundLayer
         if (col && col.IsTouchingLayers(groundLayer))
             return true;
 
-        // 3) Cuối cùng, BoxCast mỏng từ đáy chân xuống một đoạn nhỏ
+        // BoxCast mỏng từ đáy chân xuống một đoạn nhỏ
         if (col)
         {
             var b = col.bounds;
@@ -97,7 +99,7 @@ public class PlayerController2D : MonoBehaviour
         if (inputX > 0 && !facingRight) Flip();
         else if (inputX < 0 && facingRight) Flip();
 
-        // Animator (nếu có)
+        // Animator 
         if (animator)
         {
             animator.SetFloat("speed", Mathf.Abs(rb.velocity.x));
