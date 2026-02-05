@@ -14,8 +14,8 @@ public interface IInteractable
 public class Interactable2D : MonoBehaviour, IInteractable
 {
     [TextArea] public string prompt = "Tương tác";
-    public bool oneShot = false;           // dùng 1 lần rồi ẩn
-    public UnityEvent onInteract;          // kéo thả sự kiện trong Inspector
+    public bool oneShot = false;           
+    public UnityEvent onInteract;          
 
     Collider2D col;
 
@@ -24,7 +24,7 @@ public class Interactable2D : MonoBehaviour, IInteractable
     void Reset()
     {
         col = GetComponent<Collider2D>();
-        col.isTrigger = true;                              // chỉ để bắt gần, không va chạm
+        col.isTrigger = true;                              
         gameObject.layer = LayerMask.NameToLayer("Interactable");
     }
 
