@@ -29,7 +29,7 @@ public class PlayerController2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;                  // top-down thì tắt trọng lực
         rb.freezeRotation = true;
-
+        DontDestroyOnLoad(gameObject);
         if (!animator) animator = GetComponentInChildren<Animator>();
         if (!sprite) sprite = GetComponentInChildren<SpriteRenderer>();
     }

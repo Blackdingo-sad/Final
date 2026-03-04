@@ -1,0 +1,1516 @@
+fileFormatVersion: 2
+guid: 4245da5f431bff041bc226f7a4434189
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tileset Spring_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 304
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bc987487caeb0844b6af5ebffcd074f
+      internalID: -712374211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_10
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 304
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b93aaefcec463647965309f324c99c7
+      internalID: -1703380154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_11
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 304
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a1a214f60477474586f095f8c0fd771
+      internalID: -1146964897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_20
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 288
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48b5847ecf475e347970d56a331a598a
+      internalID: 865043328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_21
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 288
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1705d8a7678f7940a2524441c38025e
+      internalID: -986054737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_32
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 272
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51a1913e5da1a894aa8a93408584972b
+      internalID: 1051743518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_33
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 272
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5270264387df0994a9175f46fbecc00c
+      internalID: -1226843156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_34
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 272
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b61a2b1f549c71f468d8d6084398a7a0
+      internalID: -1101582368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_43
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 404e6f32d55e44346b7307786d8a6176
+      internalID: 1009351505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_44
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f88ca4991a8452d479df10e8ceaeb876
+      internalID: 1323428069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_46
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17b82cedf1485ae498374307212a3d52
+      internalID: 1349386757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_55
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f5e49a4908fa0947b889c103ac4e52c
+      internalID: 1707925953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_57
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbda38a32c5d3a84ab73fb60d506e1e1
+      internalID: -2025342404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_58
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39e3bd234b0fd3f48b184e6c2c2c8e8d
+      internalID: 309296785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_67
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f856c9a6278b24f499dd21780a254c54
+      internalID: 1109583924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_68
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2c66f23eb0b04c4d8753b11e7fc00fd
+      internalID: 1477686997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_79
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1876b6d2bf3bfe146834f942bba4f159
+      internalID: -1909711837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_80
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe9a28b8931a6c34bad3284ba66e1b0b
+      internalID: 116412111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_89
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31b19f2b0fe40e0449f511010fbcd68c
+      internalID: 1885421299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_90
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 768eef94cd8f94f4e9b4adeab325185c
+      internalID: 681741402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_92
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a04f810c221bb754eb9da8bb91086b4a
+      internalID: -1309899745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_101
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d16c1f0ea8a8474e82227e72c94a915
+      internalID: 1631971646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_103
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e531e7efabf09814598b0dadb1366929
+      internalID: 1029567646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_104
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86e787b946c4f9b4ab4ab6f54acb3692
+      internalID: 447063658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_113
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cca8a60ecf32d004c86715b03d5a11b2
+      internalID: 1917042799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_114
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e6635e6c4792064687a07c8a9bc779f
+      internalID: -1323581571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_125
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8f759d9dd8d8a249a3208df593b763a
+      internalID: 554925479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_126
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f001272378304a24cab529d7f409a979
+      internalID: -1484992457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_127
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ca708252556bb54eaca0f638cc400a7
+      internalID: 1961803543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_136
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10a5d8be3840039488d2f646677b5a70
+      internalID: -163324336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_137
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4ac0ac4ab52f914a9cdd9de0efbad76
+      internalID: 1518257167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_139
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf1ef243f9796f54b884cbd32e420480
+      internalID: 691372749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_146
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96fbbaab70ae03148ace83712ce45eb6
+      internalID: -463124008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_148
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0998b5541b278b4399f13ffabd31b14
+      internalID: -972615368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_150
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 907efa7ac5e929e4b921a639751b5695
+      internalID: 913238881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_151
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5b4fcc8962d0864881a2657a7a4eb73
+      internalID: 798741892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_160
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40b9dba498391c64c93067cc797deb63
+      internalID: -1506395690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_161
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dbe479cdb7073c41a9c82533f6341cf
+      internalID: 173656787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_172
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 069fdf6b33c8102489d57d587468ec3f
+      internalID: -1047857628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_173
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c0b0ec576f58fb4f8f2dcec14fbfde4
+      internalID: 377131231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_174
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b320bd0bcb2481448a389acd226c3d32
+      internalID: 824325409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_183
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9b5a84c5a018f7469da514a252e19f8
+      internalID: 756290767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_184
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09c6e3652d26d3449a6068aa6cf5a252
+      internalID: 39192785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_186
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 074f23f43ba580948b68eeb5afcd053c
+      internalID: 2029084137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_195
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec70d81266af86448a758055ccdd339e
+      internalID: 1686520020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_197
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19834ce15273c7f459ba57f7edd1e56f
+      internalID: 1055179255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_198
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11515f5bd93561e44b102ffdcb1f975a
+      internalID: 1316586072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_207
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b7c2f7d3a48c5c409a18c34b27541f0
+      internalID: 1987995242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_208
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d5a6031667959c4fb8a67f24597e08b
+      internalID: -1112188647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_219
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9187330312910cb45acd7d0a844d2aaa
+      internalID: 399220661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_220
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 154f2a83067e6534f9cd770e08de66c8
+      internalID: -1048487794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_221
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25041a974d6680246bdb71a688892e29
+      internalID: 929926040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_230
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca948fabf498d2047a4c87c38e12db55
+      internalID: 1819956824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_231
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93625d54eff50344d962d537f14e5baf
+      internalID: -129054779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tileset Spring_233
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6abb47f2807aae84bad22b115f1a4105
+      internalID: -299281484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Tileset Spring_0: -1521002744
+      Tileset Spring_1: 1843768130
+      Tileset Spring_10: -1703380154
+      Tileset Spring_100: -29282953
+      Tileset Spring_101: 1631971646
+      Tileset Spring_102: -1947787060
+      Tileset Spring_103: 1029567646
+      Tileset Spring_104: 447063658
+      Tileset Spring_105: 2141605808
+      Tileset Spring_106: -1298361724
+      Tileset Spring_107: 846253803
+      Tileset Spring_108: -1907261681
+      Tileset Spring_109: -639959984
+      Tileset Spring_11: -1146964897
+      Tileset Spring_110: -1758860114
+      Tileset Spring_111: -353624313
+      Tileset Spring_112: -1302937494
+      Tileset Spring_113: 1917042799
+      Tileset Spring_114: -1323581571
+      Tileset Spring_115: -1739511163
+      Tileset Spring_116: 680556370
+      Tileset Spring_117: 1765917949
+      Tileset Spring_118: -1300354428
+      Tileset Spring_119: 1868466996
+      Tileset Spring_12: -118093313
+      Tileset Spring_120: 231378630
+      Tileset Spring_121: 1026925850
+      Tileset Spring_122: 302563165
+      Tileset Spring_123: -1357303908
+      Tileset Spring_124: 489375003
+      Tileset Spring_125: 554925479
+      Tileset Spring_126: -1484992457
+      Tileset Spring_127: 1961803543
+      Tileset Spring_128: 109106777
+      Tileset Spring_129: 1840044316
+      Tileset Spring_13: -547226905
+      Tileset Spring_130: -1420643085
+      Tileset Spring_131: 218825762
+      Tileset Spring_132: -926103415
+      Tileset Spring_133: 312713786
+      Tileset Spring_134: 1668460718
+      Tileset Spring_135: 1658297788
+      Tileset Spring_136: -163324336
+      Tileset Spring_137: 1518257167
+      Tileset Spring_138: 1907288945
+      Tileset Spring_139: 691372749
+      Tileset Spring_14: -1508621221
+      Tileset Spring_140: 1718326204
+      Tileset Spring_141: -941381489
+      Tileset Spring_142: 454089114
+      Tileset Spring_143: 822692830
+      Tileset Spring_144: -1790976606
+      Tileset Spring_145: 1881984833
+      Tileset Spring_146: -463124008
+      Tileset Spring_147: -504105989
+      Tileset Spring_148: -972615368
+      Tileset Spring_149: 1413667090
+      Tileset Spring_15: 1143525139
+      Tileset Spring_150: 913238881
+      Tileset Spring_151: 798741892
+      Tileset Spring_152: 1062243717
+      Tileset Spring_153: 883278954
+      Tileset Spring_154: -1078492579
+      Tileset Spring_155: -1391358641
+      Tileset Spring_156: 632497091
+      Tileset Spring_157: -2133284641
+      Tileset Spring_158: 1962977421
+      Tileset Spring_159: -668057902
+      Tileset Spring_16: -117121494
+      Tileset Spring_160: -1506395690
+      Tileset Spring_161: 173656787
+      Tileset Spring_162: -1557243487
+      Tileset Spring_163: 765877273
+      Tileset Spring_164: -1338569672
+      Tileset Spring_165: -150433893
+      Tileset Spring_166: -1940040024
+      Tileset Spring_167: -23135074
+      Tileset Spring_168: -835981163
+      Tileset Spring_169: -2095730212
+      Tileset Spring_17: -221538675
+      Tileset Spring_170: -887891221
+      Tileset Spring_171: -718012935
+      Tileset Spring_172: -1047857628
+      Tileset Spring_173: 377131231
+      Tileset Spring_174: 824325409
+      Tileset Spring_175: -536031779
+      Tileset Spring_176: -2056206240
+      Tileset Spring_177: -193204968
+      Tileset Spring_178: -231347097
+      Tileset Spring_179: -1312651841
+      Tileset Spring_18: 458648448
+      Tileset Spring_180: -1374295831
+      Tileset Spring_181: 87369312
+      Tileset Spring_182: -370099253
+      Tileset Spring_183: 756290767
+      Tileset Spring_184: 39192785
+      Tileset Spring_185: 1841777179
+      Tileset Spring_186: 2029084137
+      Tileset Spring_187: -1660871667
+      Tileset Spring_188: 1081400766
+      Tileset Spring_189: 1236019467
+      Tileset Spring_19: 1074100277
+      Tileset Spring_190: -1587523852
+      Tileset Spring_191: -189841117
+      Tileset Spring_192: -457692782
+      Tileset Spring_193: 1082259642
+      Tileset Spring_194: -2060715532
+      Tileset Spring_195: 1686520020
+      Tileset Spring_196: -1692419020
+      Tileset Spring_197: 1055179255
+      Tileset Spring_198: 1316586072
+      Tileset Spring_199: 620931422
+      Tileset Spring_2: 714528477
+      Tileset Spring_20: 865043328
+      Tileset Spring_200: -714671688
+      Tileset Spring_201: 966215711
+      Tileset Spring_202: -1216171304
+      Tileset Spring_203: -2078071661
+      Tileset Spring_204: 262108751
+      Tileset Spring_205: -475874
+      Tileset Spring_206: 547363020
+      Tileset Spring_207: 1987995242
+      Tileset Spring_208: -1112188647
+      Tileset Spring_209: -1841986162
+      Tileset Spring_21: -986054737
+      Tileset Spring_210: 1065115725
+      Tileset Spring_211: -89235686
+      Tileset Spring_212: 907027290
+      Tileset Spring_213: -1843922640
+      Tileset Spring_214: 821176392
+      Tileset Spring_215: -1131037825
+      Tileset Spring_216: 494514867
+      Tileset Spring_217: -695208572
+      Tileset Spring_218: -1466683747
+      Tileset Spring_219: 399220661
+      Tileset Spring_22: 239266719
+      Tileset Spring_220: -1048487794
+      Tileset Spring_221: 929926040
+      Tileset Spring_222: 1005780991
+      Tileset Spring_223: -276799133
+      Tileset Spring_224: 1919952965
+      Tileset Spring_225: 1919156629
+      Tileset Spring_226: 1655164103
+      Tileset Spring_227: -1936089230
+      Tileset Spring_228: -1473443658
+      Tileset Spring_229: 837409354
+      Tileset Spring_23: -1778058017
+      Tileset Spring_230: 1819956824
+      Tileset Spring_231: -129054779
+      Tileset Spring_232: 402342518
+      Tileset Spring_233: -299281484
+      Tileset Spring_24: -601403755
+      Tileset Spring_25: 1453529173
+      Tileset Spring_26: 20765981
+      Tileset Spring_27: 2024457224
+      Tileset Spring_28: 1067298566
+      Tileset Spring_29: -1299064159
+      Tileset Spring_3: 2024945443
+      Tileset Spring_30: 283401679
+      Tileset Spring_31: 929652483
+      Tileset Spring_32: 1051743518
+      Tileset Spring_33: -1226843156
+      Tileset Spring_34: -1101582368
+      Tileset Spring_35: 1281829041
+      Tileset Spring_36: -97320794
+      Tileset Spring_37: 461494679
+      Tileset Spring_38: 788741218
+      Tileset Spring_39: -1851292214
+      Tileset Spring_4: 888323214
+      Tileset Spring_40: -672938871
+      Tileset Spring_41: -661800169
+      Tileset Spring_42: -971528611
+      Tileset Spring_43: 1009351505
+      Tileset Spring_44: 1323428069
+      Tileset Spring_45: 598276759
+      Tileset Spring_46: 1349386757
+      Tileset Spring_47: -624970408
+      Tileset Spring_48: -294761658
+      Tileset Spring_49: 1588643563
+      Tileset Spring_5: -1489781328
+      Tileset Spring_50: -982929502
+      Tileset Spring_51: -1167005824
+      Tileset Spring_52: -1963758533
+      Tileset Spring_53: -737720701
+      Tileset Spring_54: 1452991208
+      Tileset Spring_55: 1707925953
+      Tileset Spring_56: 1204555138
+      Tileset Spring_57: -2025342404
+      Tileset Spring_58: 309296785
+      Tileset Spring_59: 445807587
+      Tileset Spring_6: 1292285302
+      Tileset Spring_60: 1030717046
+      Tileset Spring_61: -2120003558
+      Tileset Spring_62: -1952973288
+      Tileset Spring_63: 1719796813
+      Tileset Spring_64: 1187323486
+      Tileset Spring_65: -221085026
+      Tileset Spring_66: -2117510539
+      Tileset Spring_67: 1109583924
+      Tileset Spring_68: 1477686997
+      Tileset Spring_69: 166908728
+      Tileset Spring_7: -1628819949
+      Tileset Spring_70: 811093779
+      Tileset Spring_71: -439713850
+      Tileset Spring_72: -1550759986
+      Tileset Spring_73: -950708110
+      Tileset Spring_74: -150615442
+      Tileset Spring_75: 751318861
+      Tileset Spring_76: -57797750
+      Tileset Spring_77: -1292354661
+      Tileset Spring_78: -113403523
+      Tileset Spring_79: -1909711837
+      Tileset Spring_8: -712374211
+      Tileset Spring_80: 116412111
+      Tileset Spring_81: 2069361673
+      Tileset Spring_82: 2026384714
+      Tileset Spring_83: -765669699
+      Tileset Spring_84: 430466441
+      Tileset Spring_85: 1859776147
+      Tileset Spring_86: 1429206067
+      Tileset Spring_87: -1830703870
+      Tileset Spring_88: -1663871915
+      Tileset Spring_89: 1885421299
+      Tileset Spring_9: 1812793518
+      Tileset Spring_90: 681741402
+      Tileset Spring_91: -1580913066
+      Tileset Spring_92: -1309899745
+      Tileset Spring_93: 1621160605
+      Tileset Spring_94: 1001286966
+      Tileset Spring_95: 229914460
+      Tileset Spring_96: 1554292463
+      Tileset Spring_97: 1956022312
+      Tileset Spring_98: 719872729
+      Tileset Spring_99: -1315046353
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

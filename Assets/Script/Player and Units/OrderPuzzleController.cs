@@ -20,7 +20,7 @@ public class OrderPuzzleController : MonoBehaviour
             Randomize();
     }
 
-    // =========================
+    
     void Randomize()
     {
         var pieces = new System.Collections.Generic.List<Transform>();
@@ -45,7 +45,7 @@ public class OrderPuzzleController : MonoBehaviour
         }
     }
 
-    // =========================
+    
     public void CheckSolved()
     {
         string orderLog = "[Puzzle Order] ";
@@ -77,7 +77,7 @@ public class OrderPuzzleController : MonoBehaviour
             }
         }
 
-        // ✔ ĐÚNG HẾT
+       
         Debug.Log(orderLog);
         Debug.Log("✅ Puzzle solved!");
 
