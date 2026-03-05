@@ -27,7 +27,7 @@ public class PlayerController2D : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0f;                  // top-down thì tắt trọng lực
+        rb.gravityScale = 0f;                  
         rb.freezeRotation = true;
         DontDestroyOnLoad(gameObject);
         if (!animator) animator = GetComponentInChildren<Animator>();
@@ -46,11 +46,10 @@ public class PlayerController2D : MonoBehaviour
 
         if (sprite) sprite.flipX = (lastFaceSign < 0);
 
-        // 3) Cập nhật Animator (chỉ cần 1 tham số speed)
         if (animator)
         {
             float speed = (moveDir * moveSpeed).magnitude; // 0 = idle, >0 = move
-            animator.SetFloat("speed", speed);
+          //  animator.SetFloat("speed", speed);
         }
     }
 

@@ -7,9 +7,18 @@ public class ToolManager : MonoBehaviour
     public static ToolManager I;
 
     [SerializeField] private ToolSlot[] slots;
+    [SerializeField] private ToolData defaultTool;
 
     public ToolData CurrentTool { get; private set; }
     private int currentIndex = -1;
+
+    private void Start()
+    {
+        if (slots.Length > 0)
+        {
+            SelectSlot(0);
+        }
+    }
 
     private void Awake()
     {

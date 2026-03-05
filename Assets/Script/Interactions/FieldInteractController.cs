@@ -7,7 +7,6 @@ public class FieldInteractController : MonoBehaviour
 {
     [Header("Tilemaps")]
     [SerializeField] private Tilemap groundTilemap;
-    [SerializeField] private Tilemap fieldTilemap;
 
     [Header("Tiles")]
     [SerializeField] private TileBase grassTile;
@@ -16,35 +15,38 @@ public class FieldInteractController : MonoBehaviour
     [Header("Interact")]
     [SerializeField] private float interactRange = 1.2f;
 
+    [SerializeField] private GameObject fieldPlotPrefab;
+    [SerializeField] private Grid grid;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-
             TryPlow();
         }
     }
 
     void TryPlow()
     {
-        Vector3Int cellPos = groundTilemap.WorldToCell(transform.position);
-        Vector3 cellCenter = groundTilemap.GetCellCenterWorld(cellPos);
+        Debug.Log("Pressed F");
 
-        if (Vector3.Distance(transform.position, cellCenter) > interactRange)
-            return;
-
-        // Không cho cày nếu có fence hoặc tree
-       // if (HasBlockingTile(cellPos))
-        //    return;
-
-        TileBase currentTile = groundTilemap.GetTile(cellPos);
-
-        if (currentTile == grassTile)
+        if (ToolManager.I == null)
         {
-            groundTilemap.SetTile(cellPos, null);
-            fieldTilemap.SetTile(cellPos, fieldTile);
-
-            Debug.Log($"Plowed at {cellPos}");
+            Debug.Log("ToolManager NULL");
+            return;
         }
+
+        if (ToolManager.I.CurrentTool == null)
+        {
+            Debug.Log("CurrentTool NULL");
+            return;
+        }
+
+        Debug.Log("Tool: " + ToolManager.I.CurrentTool.toolType);
+
+        Vector3Int cellPos = grid.WorldToCell(transform.position);
+        Vector3 cellCenter = grid.GetCellCenterWorld(cellPos);
+
+        Instantiate(fieldPlotPrefab, cellCenter, Quaternion.identity);
     }
 }
