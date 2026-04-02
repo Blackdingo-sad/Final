@@ -19,6 +19,6 @@ MonoBehaviour:
   - Wanna Play?
   autoProgressLines: 0100
   autoProgressDelay: 1.5
-  typingSpeed: 0.5
+  typingSpeed: 0.05
   VoiceSound: []
   VoicePitch: 1

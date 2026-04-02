@@ -21,7 +21,10 @@ public class ItemDictionary : MonoBehaviour
 
         foreach(Item item in itemPrefabs)
         {
-            itemDictionary[item.ID] = item.gameObject;
+            if (!itemDictionary.ContainsKey(item.ID))
+            {
+                itemDictionary[item.ID] = item.gameObject;
+            }
         }
     }
 

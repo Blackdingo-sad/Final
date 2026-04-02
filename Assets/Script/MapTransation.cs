@@ -19,7 +19,7 @@ public class MapTransation : MonoBehaviour
 
     private void Awake()
     {
-        confiner = FindFirstObjectByType<CinemachineConfiner2D>();
+        confiner = FindFirstObjectByType<CinemachineConfiner2D>();        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,6 +30,7 @@ public class MapTransation : MonoBehaviour
 
             confiner.m_BoundingShape2D = mapBoundry;
             confiner.InvalidateCache();
+            UpdatePlayerPosition(collision.gameObject);
         }
     }
 

@@ -10,20 +10,37 @@ public class InventoryController : MonoBehaviour
     public int slotCount;
     public GameObject[] itemPrefabs; // Array of item prefabs to populate the inventory
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         itemDictionary = Object.FindAnyObjectByType<ItemDictionary>();
-         //for (int i = 0; i < slotCount; i++)
-         //{
-         //    Slot slot = Instantiate(slotPrefab, inventoryPanel.transform).GetComponent<Slot>();
-         //   if (i < itemPrefabs.Length)
-         //    {
-         //        GameObject item = Instantiate(itemPrefabs[i], slot.transform);
-         //        item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Center the item in the slot
-         //        slot.curentItem = item;
-         //    }
-         //}
+        //for (int i = 0; i < slotCount; i++)
+        //{
+        //    Slot slot = Instantiate(slotPrefab, inventoryPanel.transform).GetComponent<Slot>();
+        //    if (i < itemPrefabs.Length)
+        //    {
+        //        GameObject item = Instantiate(itemPrefabs[i], slot.transform);
+        //        item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Center the item in the slot
+        //        slot.curentItem = item;
+        //    }
+        //}
 
+    }
+
+    public bool AddItem(GameObject itemPrefab)
+    {
+        foreach(Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if (slot != null && slot.curentItem == null)
+            {
+                GameObject newItem = Instantiate(itemPrefab, slot.transform);
+                newItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Center the item in the slot
+                slot.curentItem = newItem;
+                return true;
+            }
+        }
+        Debug.Log("Inventory full! Cannot add item: " + itemPrefab.name);
+        return false; // Inventory full
     }
     public List<InventorySaveData> GetInventoryItems()
     {
@@ -49,7 +66,7 @@ public class InventoryController : MonoBehaviour
         }
 
         for(int i=0; i < slotCount; i++)
-        {
+        { 
             Instantiate(slotPrefab, inventoryPanel.transform);
         }
 
@@ -65,6 +82,20 @@ public class InventoryController : MonoBehaviour
                     item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Center the item in the slot
                     slot.curentItem = item;
                 }
+            }
+        }
+    }
+
+    public void SetInventoryScale(float scale)
+    {
+        foreach (Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+
+            if (slot != null && slot.curentItem != null)
+            {
+                RectTransform rect = slot.curentItem.GetComponent<RectTransform>();
+                rect.localScale = Vector3.one * scale;
             }
         }
     }

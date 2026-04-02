@@ -16,12 +16,12 @@ public class BearFencePuzzleInteract : MonoBehaviour, IInteractable
     // ===== Interface implementation =====
     public string PromptMessage => promptMessage;
 
-    public void Interact(GameObject interactor)
+    public void Interact()
     {
         if (puzzleStarted) return;
 
         puzzleStarted = true;
-        OpenPuzzle(interactor);
+        //OpenPuzzle(interactor);
     }
 
     // ===== Logic =====
@@ -41,10 +41,10 @@ public class BearFencePuzzleInteract : MonoBehaviour, IInteractable
             player.enabled = false;
         }
 
-        if (interactor.TryGetComponent<PlayerInteractor2D>(out var interactor2D))
-        {
-            promptMessage = null;
-        }
+        //if (interactor.TryGetComponent<PlayerInteractor2D>(out var interactor2D))
+        //{
+        //    promptMessage = null;
+        //}
 
         // puzzle giải xong
         puzzleController.OnPuzzleSolved += () =>
@@ -64,5 +64,10 @@ public class BearFencePuzzleInteract : MonoBehaviour, IInteractable
         }
 
         Debug.Log("Bear puzzle completed");
+    }
+
+    public bool CanInteract()
+    {
+        throw new System.NotImplementedException();
     }
 }
