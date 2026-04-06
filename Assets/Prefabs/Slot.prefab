@@ -88,4 +88,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b84fe0d29d811947a7e0ad634cc5578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
-  curentItem: {fileID: 9082596524832879796, guid: f150657bbe23d6643b3e01892b9b2a71, type: 3}
+  curentItem: {fileID: 0}

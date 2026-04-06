@@ -28,13 +28,61 @@ public class InventoryController : MonoBehaviour
 
     public bool AddItem(GameObject itemPrefab)
     {
-        foreach(Transform slotTransform in inventoryPanel.transform)
+        if (inventoryPanel == null)
+        {
+            Debug.LogWarning("Inventory panel is not assigned!");
+            return false;
+        }
+
+        Item itemToAdd = itemPrefab.GetComponent<Item>();
+        if (itemToAdd == null) return false; //Not a valid item prefab
+
+        int addAmount = Mathf.Max(1, itemToAdd.quantity);
+
+        foreach (Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if (slot != null && slot.curentItem != null)
+            {
+                Item SlotItem = slot.curentItem.GetComponent<Item>();
+                if (SlotItem != null && SlotItem.ID == itemToAdd.ID)
+                {
+                    SlotItem.AddToStack(addAmount);
+                    return true; 
+                }
+            }
+        }
+
+        foreach (Transform slotTransform in inventoryPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
             if (slot != null && slot.curentItem == null)
             {
-                GameObject newItem = Instantiate(itemPrefab, slot.transform);
-                newItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Center the item in the slot
+                GameObject prefabForInventory = itemToAdd.uiPrefab != null ? itemToAdd.uiPrefab : itemPrefab;
+                GameObject newItem = Instantiate(prefabForInventory, slot.transform);
+
+                RectTransform rect = newItem.GetComponent<RectTransform>();
+                if (rect != null)
+                {
+                    rect.anchoredPosition = Vector2.zero; // Center the item in the slot
+                }
+
+                if (newItem.GetComponent<CanvasGroup>() == null)
+                {
+                    newItem.AddComponent<CanvasGroup>();
+                }
+                if (newItem.GetComponent<ItemDragHandler>() == null)
+                {
+                    newItem.AddComponent<ItemDragHandler>();
+                }
+
+                Item newItemComponent = newItem.GetComponent<Item>();
+                if (newItemComponent != null)
+                {
+                    newItemComponent.quantity = addAmount;
+                    newItemComponent.UpdateQuantityDisplay();
+                }
+
                 slot.curentItem = newItem;
                 return true;
             }
@@ -51,7 +99,12 @@ public class InventoryController : MonoBehaviour
             if (slot.curentItem != null)
             {
                Item item = slot.curentItem.GetComponent<Item>();
-                invData.Add(new InventorySaveData { itemID = item.ID, slotIndex = slotTransform.GetSiblingIndex() });
+               invData.Add(new InventorySaveData 
+               { 
+                   itemID = item.ID, 
+                   slotIndex = slotTransform.GetSiblingIndex(),
+                   quantity = item.quantity
+               });
             }
          
         }
@@ -78,25 +131,37 @@ public class InventoryController : MonoBehaviour
                 GameObject itemPrefab = itemDictionary.GetItemPrefab(data.itemID);
                 if (itemPrefab != null)
                 {
-                    GameObject item = Instantiate(itemPrefab, slot.transform);
-                    item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Center the item in the slot
+                    Item sourceItem = itemPrefab.GetComponent<Item>();
+                    GameObject prefabToInstantiate = sourceItem != null && sourceItem.uiPrefab != null ? sourceItem.uiPrefab : itemPrefab;
+                    
+                    GameObject item = Instantiate(prefabToInstantiate, slot.transform);
+                    
+                    RectTransform rect = item.GetComponent<RectTransform>();
+                    if (rect != null)
+                    {
+                        rect.anchoredPosition = Vector2.zero; // Center the item in the slot
+                    }
+                    
+                    if (item.GetComponent<CanvasGroup>() == null)
+                    {
+                        item.AddComponent<CanvasGroup>();
+                    }
+                    if (item.GetComponent<ItemDragHandler>() == null)
+                    {
+                        item.AddComponent<ItemDragHandler>();
+                    }
+
+                    Item itemComponent = item.GetComponent<Item>();
+                    if (itemComponent != null)
+                    {
+                        itemComponent.quantity = data.quantity;
+                        itemComponent.UpdateQuantityDisplay();
+                    }
+
                     slot.curentItem = item;
+
                 }
             }
         }
-    }
-
-    public void SetInventoryScale(float scale)
-    {
-        foreach (Transform slotTransform in inventoryPanel.transform)
-        {
-            Slot slot = slotTransform.GetComponent<Slot>();
-
-            if (slot != null && slot.curentItem != null)
-            {
-                RectTransform rect = slot.curentItem.GetComponent<RectTransform>();
-                rect.localScale = Vector3.one * scale;
-            }
-        }
-    }
+    }   
 }

@@ -17,8 +17,18 @@ MonoBehaviour:
   dialogueLines:
   - Hello! Brother
   - Wanna Play?
+  - OKAY!!
+  - :((
+  - NEXT TIME THEN!!
   autoProgressLines: 0100
+  endDialogueLines: 0000010001
   autoProgressDelay: 1.5
   typingSpeed: 0.05
   VoiceSound: []
   VoicePitch: 1
+  choices:
+  - dialogueIndex: 1
+    choices:
+    - Sure!
+    - Sorry! I'm busy
+    nextDialogueIndexes: 0200000003000000
