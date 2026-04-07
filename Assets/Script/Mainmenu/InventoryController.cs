@@ -9,21 +9,29 @@ public class InventoryController : MonoBehaviour
     public GameObject slotPrefab;
     public int slotCount;
     public GameObject[] itemPrefabs; // Array of item prefabs to populate the inventory
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Awake()
     {
         itemDictionary = Object.FindAnyObjectByType<ItemDictionary>();
-        //for (int i = 0; i < slotCount; i++)
-        //{
-        //    Slot slot = Instantiate(slotPrefab, inventoryPanel.transform).GetComponent<Slot>();
-        //    if (i < itemPrefabs.Length)
-        //    {
-        //        GameObject item = Instantiate(itemPrefabs[i], slot.transform);
-        //        item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Center the item in the slot
-        //        slot.curentItem = item;
-        //    }
-        //}
+        EnsureSlotsInitialized();
+    }
 
+    private void EnsureSlotsInitialized()
+    {
+        if (inventoryPanel == null || slotPrefab == null || slotCount <= 0)
+        {
+            return;
+        }
+
+        if (inventoryPanel.transform.childCount > 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < slotCount; i++)
+        {
+            Instantiate(slotPrefab, inventoryPanel.transform);
+        }
     }
 
     public bool AddItem(GameObject itemPrefab)
@@ -48,7 +56,7 @@ public class InventoryController : MonoBehaviour
                 if (SlotItem != null && SlotItem.ID == itemToAdd.ID)
                 {
                     SlotItem.AddToStack(addAmount);
-                    return true; 
+                    return true;
                 }
             }
         }
@@ -93,37 +101,52 @@ public class InventoryController : MonoBehaviour
     public List<InventorySaveData> GetInventoryItems()
     {
         List<InventorySaveData> invData = new List<InventorySaveData>();
-        foreach(Transform slotTransform in inventoryPanel.transform)
+        foreach (Transform slotTransform in inventoryPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
             if (slot.curentItem != null)
             {
-               Item item = slot.curentItem.GetComponent<Item>();
-               invData.Add(new InventorySaveData 
-               { 
-                   itemID = item.ID, 
-                   slotIndex = slotTransform.GetSiblingIndex(),
-                   quantity = item.quantity
-               });
+                Item item = slot.curentItem.GetComponent<Item>();
+                invData.Add(new InventorySaveData
+                {
+                    itemID = item.ID,
+                    slotIndex = slotTransform.GetSiblingIndex(),
+                    quantity = item.quantity
+                });
             }
-         
+
         }
         return invData;
     }
 
     public void SetInventoryItems(List<InventorySaveData> invData)
     {
-        foreach(Transform child in inventoryPanel.transform)
+        foreach (Transform child in inventoryPanel.transform)
         {
             Destroy(child.gameObject);
         }
 
-        for(int i=0; i < slotCount; i++)
-        { 
+        for (int i = 0; i < slotCount; i++)
+        {
             Instantiate(slotPrefab, inventoryPanel.transform);
         }
 
-        foreach(InventorySaveData data in invData)
+        if (invData == null || invData.Count == 0)
+        {
+            return;
+        }
+
+        if (itemDictionary == null)
+        {
+            itemDictionary = Object.FindAnyObjectByType<ItemDictionary>();
+            if (itemDictionary == null)
+            {
+                Debug.LogWarning("ItemDictionary not found when loading inventory.");
+                return;
+            }
+        }
+
+        foreach (InventorySaveData data in invData)
         {
             if (data.slotIndex < slotCount)
             {
@@ -133,15 +156,15 @@ public class InventoryController : MonoBehaviour
                 {
                     Item sourceItem = itemPrefab.GetComponent<Item>();
                     GameObject prefabToInstantiate = sourceItem != null && sourceItem.uiPrefab != null ? sourceItem.uiPrefab : itemPrefab;
-                    
+
                     GameObject item = Instantiate(prefabToInstantiate, slot.transform);
-                    
+
                     RectTransform rect = item.GetComponent<RectTransform>();
                     if (rect != null)
                     {
                         rect.anchoredPosition = Vector2.zero; // Center the item in the slot
                     }
-                    
+
                     if (item.GetComponent<CanvasGroup>() == null)
                     {
                         item.AddComponent<CanvasGroup>();
@@ -163,5 +186,5 @@ public class InventoryController : MonoBehaviour
                 }
             }
         }
-    }   
+    }
 }

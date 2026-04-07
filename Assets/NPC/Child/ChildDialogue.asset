@@ -20,8 +20,10 @@ MonoBehaviour:
   - OKAY!!
   - :((
   - NEXT TIME THEN!!
-  autoProgressLines: 0100
-  endDialogueLines: 0000010001
+  - LETGOOOO...!!!!
+  - HEHEHEHE.....
+  autoProgressLines: 01000000000000
+  endDialogueLines: 00000100010101
   autoProgressDelay: 1.5
   typingSpeed: 0.05
   VoiceSound: []
@@ -32,3 +34,7 @@ MonoBehaviour:
     - Sure!
     - Sorry! I'm busy
     nextDialogueIndexes: 0200000003000000
+    giveQuest: 0100
+  questInProgressIndex: 5
+  questCompletedIndex: 6
+  quest: {fileID: 11400000, guid: 1fe9e5bcdc813fc499f94a5a40a350bc, type: 2}

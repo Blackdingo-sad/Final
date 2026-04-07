@@ -1,5 +1,4 @@
 using Cinemachine;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -9,10 +8,7 @@ public class SaveController : MonoBehaviour
     private string saveLocation;
     private InventoryController inventoryController;
     private HotbarController hotbarController;
-    private Chest[] chests; 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+    private Chest[] chests;
 
     void Start()
     {
@@ -49,13 +45,20 @@ public class SaveController : MonoBehaviour
             Debug.LogError("BoundingShape2D is NULL!");
             return;
         }
+
+        if (inventoryController == null || hotbarController == null)
+        {
+            Debug.LogError("InventoryController or HotbarController not found!");
+            return;
+        }
+
         SaveData saveData = new SaveData
         {
-            playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position,
-            mapBoundary = FindFirstObjectByType<CinemachineConfiner2D>().m_BoundingShape2D.gameObject.name,
+            playerPosition = player.transform.position,
+            mapBoundary = confiner.m_BoundingShape2D.gameObject.name,
             inventorySaveData = inventoryController.GetInventoryItems(),
             hotbarSaveData = hotbarController.GetHotbarItems(),
-            chestSaveData = GetChestStates(), 
+            chestSaveData = GetChestStates(),
 
         };
         File.WriteAllText(saveLocation, JsonUtility.ToJson(saveData));
@@ -78,18 +81,46 @@ public class SaveController : MonoBehaviour
 
     public void LoadGame()
     {
+        if (inventoryController == null || hotbarController == null)
+        {
+            Debug.LogError("InventoryController or HotbarController not found!");
+            return;
+        }
+
         if (File.Exists(saveLocation))
         {
             SaveData saveData = JsonUtility.FromJson<SaveData>(File.ReadAllText(saveLocation));
+            if (saveData == null)
+            {
+                inventoryController.SetInventoryItems(new List<InventorySaveData>());
+                hotbarController.SetHotbarItems(new List<InventorySaveData>());
+                return;
+            }
+
+            inventoryController.SetInventoryItems(saveData.inventorySaveData ?? new List<InventorySaveData>());
+            hotbarController.SetHotbarItems(saveData.hotbarSaveData ?? new List<InventorySaveData>());
+
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.transform.position = saveData.playerPosition;
+            if (player != null)
+            {
+                player.transform.position = saveData.playerPosition;
+            }
+
             CinemachineConfiner2D confiner = FindFirstObjectByType<CinemachineConfiner2D>();
-            confiner.m_BoundingShape2D = GameObject.Find(saveData.mapBoundary).GetComponent<PolygonCollider2D>();
+            if (confiner != null && !string.IsNullOrEmpty(saveData.mapBoundary))
+            {
+                GameObject boundaryObj = GameObject.Find(saveData.mapBoundary);
+                if (boundaryObj != null)
+                {
+                    PolygonCollider2D boundary = boundaryObj.GetComponent<PolygonCollider2D>();
+                    if (boundary != null)
+                    {
+                        confiner.m_BoundingShape2D = boundary;
+                    }
+                }
+            }
 
-            inventoryController.SetInventoryItems(saveData.inventorySaveData);
-            hotbarController.SetHotbarItems(saveData.hotbarSaveData);
-
-            LoadChestStates(saveData.chestSaveData);
+            LoadChestStates(saveData.chestSaveData ?? new List<ChestSaveData>());
         }
         else
         {

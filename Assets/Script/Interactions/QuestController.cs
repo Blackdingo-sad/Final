@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,14 +10,26 @@ public class QuestController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         questUI = Object.FindFirstObjectByType<QuestUI>();
     }
 
     public void AcceptQuest(Quest quest)
     {
+        if (quest == null)
+        {
+            return;
+        }
+
         if (IsQuestActive(quest.questID))
         {
             Debug.LogWarning($"Quest with ID {quest.questID} is already active.");
@@ -27,9 +38,11 @@ public class QuestController : MonoBehaviour
 
         activateQuests.Add(new QuestProgress(quest));
 
-        questUI.UpdateQuestUI();
+        if (questUI != null)
+        {
+            questUI.UpdateQuestUI();
+        }
     }
 
     public bool IsQuestActive(string questID) => activateQuests.Exists(q => q.quest.questID == questID);
-     
 }

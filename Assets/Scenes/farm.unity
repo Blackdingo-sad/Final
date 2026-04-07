@@ -59562,6 +59562,7 @@ GameObject:
   - component: {fileID: 1632155425}
   - component: {fileID: 1632155426}
   - component: {fileID: 1632155427}
+  - component: {fileID: 1632155428}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -59646,6 +59647,19 @@ MonoBehaviour:
   hotbarPanel: {fileID: 2078821058}
   slotPrefab: {fileID: 3922987065333231106, guid: 2f3734c5fde00b44da64f93ff96e88d3, type: 3}
   slotCount: 7
+--- !u!114 &1632155428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632155422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df7c2b73b01f6c4c9797244222589e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestController
+  activateQuests: []
 --- !u!1 &1641766551
 GameObject:
   m_ObjectHideFlags: 0
@@ -74491,8 +74505,6 @@ MonoBehaviour:
   questListContent: {fileID: 1106666286}
   questEntryPrefab: {fileID: 7119657140469448487, guid: 6d6412159c61e8e42b7a5956f948b639, type: 3}
   objectiveTextPrefab: {fileID: 7571220382748350023, guid: 1d79e51d36ea5b9409d3602f7115dcb4, type: 3}
-  testQuest: {fileID: 11400000, guid: 1fe9e5bcdc813fc499f94a5a40a350bc, type: 2}
-  testQuestAmount: 2
 --- !u!1 &2022945497
 GameObject:
   m_ObjectHideFlags: 0

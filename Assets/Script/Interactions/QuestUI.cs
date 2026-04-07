@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,18 +8,10 @@ public class QuestUI : MonoBehaviour
     public GameObject questEntryPrefab;
     public GameObject objectiveTextPrefab;
 
-    public Quest testQuest;
-    public int testQuestAmount;
-    private List<QuestProgress> testQuests = new();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        for (int i = 0; i < testQuestAmount; i++)
-        {
-            testQuests.Add(new QuestProgress(testQuest));
-        }
-            UpdateQuestUI();
-
+        UpdateQuestUI();
     }
 
     // Update is called once per frame
@@ -31,7 +22,12 @@ public class QuestUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var questProgress in testQuests)
+        if (QuestController.Instance == null)
+        {
+            return;
+        }
+
+        foreach (var questProgress in QuestController.Instance.activateQuests)
         {
             GameObject entry = Instantiate(questEntryPrefab, questListContent);
             TMP_Text questNameText = entry.transform.Find("QuestNameText").GetComponent<TMP_Text>();

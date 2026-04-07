@@ -16,11 +16,12 @@ public class ItemPickupUIController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance == null)
         {
             Instance = this;
         }
-        else { 
+        else if (Instance != this)
+        {
             Debug.LogError("Multiple ItemPickupUIController detected! Destroy the extra.");
             Destroy(gameObject);
         }
