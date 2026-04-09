@@ -19,13 +19,18 @@ public class SaveController : MonoBehaviour
     private void InitializeComponents()
     {
         saveLocation = Path.Combine(Application.persistentDataPath, "saveData.json");
-        inventoryController = Object.FindFirstObjectByType<InventoryController>();
+        inventoryController = InventoryController.Instance != null ? InventoryController.Instance : Object.FindFirstObjectByType<InventoryController>();
         hotbarController = Object.FindFirstObjectByType<HotbarController>();
         chests = Object.FindObjectsByType<Chest>(FindObjectsSortMode.None);
     }
 
     public void SaveGame()
     {
+        if (inventoryController == null || hotbarController == null)
+        {
+            InitializeComponents();
+        }
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
@@ -59,6 +64,7 @@ public class SaveController : MonoBehaviour
             inventorySaveData = inventoryController.GetInventoryItems(),
             hotbarSaveData = hotbarController.GetHotbarItems(),
             chestSaveData = GetChestStates(),
+            questProgressData = QuestController.Instance.activateQuests, 
 
         };
         File.WriteAllText(saveLocation, JsonUtility.ToJson(saveData));
@@ -121,6 +127,8 @@ public class SaveController : MonoBehaviour
             }
 
             LoadChestStates(saveData.chestSaveData ?? new List<ChestSaveData>());
+
+            QuestController.Instance.LoadQuestProgress(saveData.questProgressData);
         }
         else
         {

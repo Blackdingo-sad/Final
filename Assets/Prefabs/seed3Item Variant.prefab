@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: ID
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7644973589978929586, guid: f150657bbe23d6643b3e01892b9b2a71, type: 3}
+      propertyPath: Name
+      value: Red seed
+      objectReference: {fileID: 0}
     - target: {fileID: 9082596524832879796, guid: f150657bbe23d6643b3e01892b9b2a71, type: 3}
       propertyPath: m_Name
       value: seed3Item Variant

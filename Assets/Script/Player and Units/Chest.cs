@@ -41,7 +41,6 @@ public class Chest : MonoBehaviour, IInteractable
         if (IsOpen)
         {
             GetComponent<SpriteRenderer>().sprite = openSprite;
-            Instantiate(itemPrefab, transform.position + Vector3.up, Quaternion.identity);
         }
     }
 }

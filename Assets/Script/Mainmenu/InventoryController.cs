@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
@@ -10,12 +12,69 @@ public class InventoryController : MonoBehaviour
     public int slotCount;
     public GameObject[] itemPrefabs; // Array of item prefabs to populate the inventory
 
+    public static InventoryController Instance { get; private set; }
+    Dictionary<int, int> itemsCountCache = new();
+    public event Action OnInventoryChanged;
+
     void Awake()
     {
-        itemDictionary = Object.FindAnyObjectByType<ItemDictionary>();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        itemDictionary = ResolveItemDictionary();
+        RebuildItemCounts();
         EnsureSlotsInitialized();
     }
 
+    private ItemDictionary ResolveItemDictionary()
+    {
+        if (itemDictionary != null) return itemDictionary;
+
+        itemDictionary = FindAnyObjectByType<ItemDictionary>();
+        if (itemDictionary != null) return itemDictionary;
+
+        ItemDictionary[] all = Resources.FindObjectsOfTypeAll<ItemDictionary>();
+        foreach (ItemDictionary dict in all)
+        {
+            if (dict != null && dict.gameObject.scene.IsValid())
+            {
+                itemDictionary = dict;
+                return itemDictionary;
+            }
+        }
+
+        return null;
+    }
+
+    public void RebuildItemCounts()
+    {
+        itemsCountCache.Clear();
+
+        foreach (Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if (slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item != null)
+                {
+                    itemsCountCache[item.ID] = itemsCountCache.GetValueOrDefault(item.ID, 0) + item.quantity;
+                }
+            }
+        }
+
+        OnInventoryChanged?.Invoke();
+    }
+
+    public Dictionary<int, int> GetItemCounts() => itemsCountCache;
+    
     private void EnsureSlotsInitialized()
     {
         if (inventoryPanel == null || slotPrefab == null || slotCount <= 0)
@@ -50,13 +109,14 @@ public class InventoryController : MonoBehaviour
         foreach (Transform slotTransform in inventoryPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
-            if (slot != null && slot.curentItem != null)
+            if (slot != null && slot.currentItem != null)
             {
-                Item SlotItem = slot.curentItem.GetComponent<Item>();
+                Item SlotItem = slot.currentItem.GetComponent<Item>();
                 if (SlotItem != null && SlotItem.ID == itemToAdd.ID)
                 {
                     SlotItem.AddToStack(addAmount);
-                    return true;
+                    RebuildItemCounts();
+                    return true; 
                 }
             }
         }
@@ -64,7 +124,7 @@ public class InventoryController : MonoBehaviour
         foreach (Transform slotTransform in inventoryPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
-            if (slot != null && slot.curentItem == null)
+            if (slot != null && slot.currentItem == null)
             {
                 GameObject prefabForInventory = itemToAdd.uiPrefab != null ? itemToAdd.uiPrefab : itemPrefab;
                 GameObject newItem = Instantiate(prefabForInventory, slot.transform);
@@ -87,11 +147,13 @@ public class InventoryController : MonoBehaviour
                 Item newItemComponent = newItem.GetComponent<Item>();
                 if (newItemComponent != null)
                 {
+                    newItemComponent.ID = itemToAdd.ID;
                     newItemComponent.quantity = addAmount;
                     newItemComponent.UpdateQuantityDisplay();
                 }
 
-                slot.curentItem = newItem;
+                slot.currentItem = newItem;
+                RebuildItemCounts();
                 return true;
             }
         }
@@ -104,9 +166,11 @@ public class InventoryController : MonoBehaviour
         foreach (Transform slotTransform in inventoryPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
-            if (slot.curentItem != null)
+            if (slot.currentItem != null)
             {
-                Item item = slot.curentItem.GetComponent<Item>();
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item == null) continue;
+
                 invData.Add(new InventorySaveData
                 {
                     itemID = item.ID,
@@ -121,9 +185,9 @@ public class InventoryController : MonoBehaviour
 
     public void SetInventoryItems(List<InventorySaveData> invData)
     {
-        foreach (Transform child in inventoryPanel.transform)
+        for (int i = inventoryPanel.transform.childCount - 1; i >= 0; i--)
         {
-            Destroy(child.gameObject);
+            DestroyImmediate(inventoryPanel.transform.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < slotCount; i++)
@@ -138,7 +202,7 @@ public class InventoryController : MonoBehaviour
 
         if (itemDictionary == null)
         {
-            itemDictionary = Object.FindAnyObjectByType<ItemDictionary>();
+            itemDictionary = ResolveItemDictionary();
             if (itemDictionary == null)
             {
                 Debug.LogWarning("ItemDictionary not found when loading inventory.");
@@ -177,14 +241,20 @@ public class InventoryController : MonoBehaviour
                     Item itemComponent = item.GetComponent<Item>();
                     if (itemComponent != null)
                     {
+                        if (sourceItem != null)
+                        {
+                            itemComponent.ID = sourceItem.ID;
+                        }
                         itemComponent.quantity = data.quantity;
                         itemComponent.UpdateQuantityDisplay();
                     }
 
-                    slot.curentItem = item;
+                    slot.currentItem = item;
 
                 }
             }
         }
+
+        RebuildItemCounts();
     }
 }

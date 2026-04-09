@@ -12,18 +12,42 @@ public class HotbarController : MonoBehaviour
 
     private ItemDictionary itemDictionary;
 
+    private void Awake()
+    {
+        itemDictionary = ResolveItemDictionary();
+    }
+
+    private ItemDictionary ResolveItemDictionary()
+    {
+        if (itemDictionary != null) return itemDictionary;
+
+        itemDictionary = Object.FindAnyObjectByType<ItemDictionary>();
+        if (itemDictionary != null) return itemDictionary;
+
+        ItemDictionary[] all = Resources.FindObjectsOfTypeAll<ItemDictionary>();
+        foreach (ItemDictionary dict in all)
+        {
+            if (dict != null && dict.gameObject.scene.IsValid())
+            {
+                itemDictionary = dict;
+                return itemDictionary;
+            }
+        }
+
+        return null;
+    }
+
     private void Start()
     {
-        itemDictionary = Object.FindAnyObjectByType<ItemDictionary>();
         InitializeHotbar();
     }
 
     // Tạo slot hotbar
     private void InitializeHotbar()
     {
-        foreach (Transform child in hotbarPanel.transform)
+        for (int i = hotbarPanel.transform.childCount - 1; i >= 0; i--)
         {
-            Destroy(child.gameObject);
+            DestroyImmediate(hotbarPanel.transform.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < slotCount; i++)
@@ -41,14 +65,16 @@ public class HotbarController : MonoBehaviour
         {
             Slot slot = slotTransform.GetComponent<Slot>();
 
-            if (slot.curentItem != null)
+            if (slot.currentItem != null)
             {
-                Item item = slot.curentItem.GetComponent<Item>();
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item == null) continue;
 
                 data.Add(new InventorySaveData
                 {
                     itemID = item.ID,
-                    slotIndex = slotTransform.GetSiblingIndex()
+                    slotIndex = slotTransform.GetSiblingIndex(),
+                    quantity = item.quantity
                 });
             }
         }
@@ -60,6 +86,21 @@ public class HotbarController : MonoBehaviour
     public void SetHotbarItems(List<InventorySaveData> data)
     {
         InitializeHotbar();
+
+        if (data == null || data.Count == 0)
+        {
+            return;
+        }
+
+        if (itemDictionary == null)
+        {
+            itemDictionary = ResolveItemDictionary();
+            if (itemDictionary == null)
+            {
+                Debug.LogWarning("ItemDictionary not found when loading hotbar.");
+                return;
+            }
+        }
 
         foreach (InventorySaveData itemData in data)
         {
@@ -73,10 +114,38 @@ public class HotbarController : MonoBehaviour
 
                 if (prefab != null)
                 {
-                    GameObject item = Instantiate(prefab, slot.transform);
-                    item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                    Item sourceItem = prefab.GetComponent<Item>();
+                    GameObject prefabToInstantiate = sourceItem != null && sourceItem.uiPrefab != null ? sourceItem.uiPrefab : prefab;
 
-                    slot.curentItem = item;
+                    GameObject item = Instantiate(prefabToInstantiate, slot.transform);
+
+                    RectTransform rect = item.GetComponent<RectTransform>();
+                    if (rect != null)
+                    {
+                        rect.anchoredPosition = Vector2.zero;
+                    }
+
+                    if (item.GetComponent<CanvasGroup>() == null)
+                    {
+                        item.AddComponent<CanvasGroup>();
+                    }
+                    if (item.GetComponent<ItemDragHandler>() == null)
+                    {
+                        item.AddComponent<ItemDragHandler>();
+                    }
+
+                    Item itemComponent = item.GetComponent<Item>();
+                    if (itemComponent != null)
+                    {
+                        if (sourceItem != null)
+                        {
+                            itemComponent.ID = sourceItem.ID;
+                        }
+                        itemComponent.quantity = itemData.quantity;
+                        itemComponent.UpdateQuantityDisplay();
+                    }
+
+                    slot.currentItem = item;
                 }
             }
         }
@@ -89,12 +158,36 @@ public class HotbarController : MonoBehaviour
         {
             Slot slot = slotTransform.GetComponent<Slot>();
 
-            if (slot.curentItem == null)
+            if (slot.currentItem == null)
             {
-                GameObject item = Instantiate(itemPrefab, slot.transform);
-                item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                Item sourceItem = itemPrefab.GetComponent<Item>();
+                GameObject prefabToInstantiate = sourceItem != null && sourceItem.uiPrefab != null ? sourceItem.uiPrefab : itemPrefab;
+                GameObject item = Instantiate(prefabToInstantiate, slot.transform);
 
-                slot.curentItem = item;
+                RectTransform rect = item.GetComponent<RectTransform>();
+                if (rect != null)
+                {
+                    rect.anchoredPosition = Vector2.zero;
+                }
+
+                if (item.GetComponent<CanvasGroup>() == null)
+                {
+                    item.AddComponent<CanvasGroup>();
+                }
+                if (item.GetComponent<ItemDragHandler>() == null)
+                {
+                    item.AddComponent<ItemDragHandler>();
+                }
+
+                Item itemComponent = item.GetComponent<Item>();
+                if (itemComponent != null && sourceItem != null)
+                {
+                    itemComponent.ID = sourceItem.ID;
+                    itemComponent.quantity = sourceItem.quantity;
+                    itemComponent.UpdateQuantityDisplay();
+                }
+
+                slot.currentItem = item;
                 return;
             }
         }

@@ -6,21 +6,38 @@ public class ItemDictionary : MonoBehaviour
 {
     public List<Item> itemPrefabs;
     private Dictionary<int, GameObject> itemDictionary;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     private void Awake()
     {
+        BuildDictionaryIfNeeded();
+    }
+
+    private void BuildDictionaryIfNeeded()
+    {
+        if (itemDictionary != null && itemDictionary.Count > 0)
+        {
+            return;
+        }
+
         itemDictionary = new Dictionary<int, GameObject>();
 
-        for( int i = 0; i < itemPrefabs.Count; i++)
+        if (itemPrefabs == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < itemPrefabs.Count; i++)
         {
             if (itemPrefabs[i] != null)
             {
-                itemPrefabs[i].ID = i+1;
+                itemPrefabs[i].ID = i + 1;
             }
         }
 
-        foreach(Item item in itemPrefabs)
+        foreach (Item item in itemPrefabs)
         {
+            if (item == null) continue;
+
             if (!itemDictionary.ContainsKey(item.ID))
             {
                 itemDictionary[item.ID] = item.gameObject;
@@ -30,6 +47,14 @@ public class ItemDictionary : MonoBehaviour
 
     public GameObject GetItemPrefab(int itemID)
     {
+        BuildDictionaryIfNeeded();
+
+        if (itemDictionary == null)
+        {
+            Debug.LogWarning("Item dictionary is not initialized.");
+            return null;
+        }
+
         itemDictionary.TryGetValue(itemID, out GameObject prefab);
         if (prefab == null)
         {

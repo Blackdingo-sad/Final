@@ -19,6 +19,17 @@ public class Quest : ScriptableObject
         {
             questID = Guid.NewGuid().ToString();
         }
+
+        if (objectives != null)
+        {
+            foreach (var obj in objectives)
+            {
+                if (obj.targetItemIDs == null)
+                {
+                    obj.targetItemIDs = new List<int>();
+                }
+            }
+        }
     }   
 
 }
@@ -31,6 +42,7 @@ public class QuestObjectives
     public string description;
     public ObjectiveType type;
 
+    public List<int> targetItemIDs;
     public int requiredAmount;
     public int currentAmount;
 
@@ -56,8 +68,9 @@ public class QuestProgress
                 objectiveID = obj.objectiveID,
                 description = obj.description,
                 type = obj.type,
+                targetItemIDs = new List<int>(obj.targetItemIDs ?? new List<int>()),
                 requiredAmount = obj.requiredAmount,
-                currentAmount = 0
+                currentAmount = 0    
             });
         }
     }

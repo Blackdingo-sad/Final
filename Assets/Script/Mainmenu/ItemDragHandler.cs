@@ -143,22 +143,22 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
 
         // 5. SLOT TRỐNG → MOVE
-        if (dropSlot.curentItem == null)
+        if (dropSlot.currentItem == null)
         {
             transform.SetParent(dropSlot.transform);
             rect.anchoredPosition = Vector2.zero;
 
-            dropSlot.curentItem = gameObject;
-            originalSlot.curentItem = null;
+            dropSlot.currentItem = gameObject;
+            originalSlot.currentItem = null;
             return;
         }
 
         // 6. SLOT CÓ ITEM → SWAP
-        GameObject targetItem = dropSlot.curentItem;
+        GameObject targetItem = dropSlot.currentItem;
 
         // swap reference
-        dropSlot.curentItem = gameObject;
-        originalSlot.curentItem = targetItem;
+        dropSlot.currentItem = gameObject;
+        originalSlot.currentItem = targetItem;
 
         // move item cũ về slot ban đầu
         if (targetItem != null)
@@ -188,7 +188,7 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     void DropItem(Slot originalSlot)
     {
-        originalSlot.curentItem = null;
+        originalSlot.currentItem = null;
 
         // FindPlayer
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -209,5 +209,7 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             Instantiate(item.worldPrefab, dropPosition, Quaternion.identity);
         }
         Destroy(gameObject);
+
+        InventoryController.Instance.RebuildItemCounts();
     }
 }

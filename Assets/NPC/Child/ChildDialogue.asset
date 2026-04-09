@@ -16,11 +16,11 @@ MonoBehaviour:
   npcPortrait: {fileID: 21300000, guid: 4370526edf2f73b45ab159c05015b8ed, type: 3}
   dialogueLines:
   - Hello! Brother
-  - Wanna Play?
+  - CAN I HAVE SOME SEED?
   - OKAY!!
   - :((
   - NEXT TIME THEN!!
-  - LETGOOOO...!!!!
+  - SEED..?!!??
   - HEHEHEHE.....
   autoProgressLines: 01000000000000
   endDialogueLines: 00000100010101

@@ -259,7 +259,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   ID: 1
-  Name: seed
+  Name: Orange seed
+  quantity: 1
+  worldPrefab: {fileID: 0}
+  uiPrefab: {fileID: 0}
+  quantityText: {fileID: 0}
 --- !u!212 &-4596209460037908803
 SpriteRenderer:
   serializedVersion: 2
