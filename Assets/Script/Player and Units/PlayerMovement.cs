@@ -18,27 +18,36 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
 
     }
-        
+
     // Update is called once per frame
     void Update()
     {
-        if(PauseController.IsGamePaused)
+        if (PauseController.IsGamePaused)
         {
-            rb.linearVelocity = Vector2.zero;
-            animator.SetBool("isWalking", false);
+            if (rb.linearVelocity != Vector2.zero)
+            {
+                rb.linearVelocity = Vector2.zero;
+                StopMovementAnimations();
+            }
             return;
         }
+
         rb.linearVelocity = moveInput * moveSpeed;
         animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+    }
+
+    void StopMovementAnimations()
+    {
+        animator.SetBool("isWalking", false);
+        animator.SetFloat("LastInputX", moveInput.x);
+        animator.SetFloat("LastInputY", moveInput.y);
     }
 
     public void Move(InputAction.CallbackContext context)
     {
         if (context.canceled)
         {
-            animator.SetBool("isWalking", false);
-            animator.SetFloat("LastInputX", moveInput.x);
-            animator.SetFloat("LastInputY", moveInput.y);
+            StopMovementAnimations();
         }   
         moveInput = context.ReadValue<Vector2>();
         animator.SetFloat("InputX", moveInput.x);

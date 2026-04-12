@@ -103,11 +103,68 @@ public class QuestController : MonoBehaviour
             questUI.UpdateQuestUI();
         }
     }
-    public void LoadQuestProgress(List<QuestProgress> savedQuests)
+    public void LoadQuestProgress(List<QuestSaveData> savedQuests)
     {
-        activateQuests = savedQuests ?? new();
+        activateQuests = new List<QuestProgress>();
+
+        if (savedQuests == null || savedQuests.Count == 0) return;
+
+        if (QuestDictionary.Instance == null)
+        {
+            Debug.LogWarning("QuestDictionary.Instance is null. Cannot load quest progress.");
+            return;
+        }
+
+        foreach (QuestSaveData data in savedQuests)
+        {
+            Quest quest = QuestDictionary.Instance.GetQuest(data.questID);
+            if (quest == null) continue;
+
+            QuestProgress progress = new QuestProgress(quest);
+
+            if (data.objectives != null)
+            {
+                foreach (ObjectiveSaveData objData in data.objectives)
+                {
+                    QuestObjectives objective = progress.objectives.Find(o => o.objectiveID == objData.objectiveID);
+                    if (objective != null)
+                    {
+                        objective.currentAmount = objData.currentAmount;
+                    }
+                }
+            }
+
+            activateQuests.Add(progress);
+        }
 
         CheckInventoryForQuests();
-        questUI.UpdateQuestUI();
+        if (questUI != null) questUI.UpdateQuestUI();
+    }
+
+    public List<QuestSaveData> GetQuestSaveData()
+    {
+        List<QuestSaveData> saveData = new List<QuestSaveData>();
+        foreach (QuestProgress progress in activateQuests)
+        {
+            if (progress?.quest == null) continue;
+
+            QuestSaveData data = new QuestSaveData
+            {
+                questID = progress.quest.questID,
+                objectives = new List<ObjectiveSaveData>()
+            };
+
+            foreach (QuestObjectives obj in progress.objectives)
+            {
+                data.objectives.Add(new ObjectiveSaveData
+                {
+                    objectiveID = obj.objectiveID,
+                    currentAmount = obj.currentAmount
+                });
+            }
+
+            saveData.Add(data);
+        }
+        return saveData;
     }
 }

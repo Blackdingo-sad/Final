@@ -29,12 +29,22 @@ public class MapTransation : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Player hit trigger");
-
-            confiner.m_BoundingShape2D = mapBoundry;
-            confiner.InvalidateCache();
-            UpdatePlayerPosition(collision.gameObject);
+            FadeTransition(collision.gameObject);
         }
     }
+
+    async void FadeTransition(GameObject player)
+    {
+        PauseController.SetPause(true);
+        await ScreenFader.Instance.FadeOut();
+
+        confiner.m_BoundingShape2D = mapBoundry;
+        confiner.InvalidateCache();        
+        UpdatePlayerPosition(player );
+
+        await ScreenFader.Instance.FadeIn();
+        PauseController.SetPause(false);
+    } 
 
     private void UpdatePlayerPosition(GameObject player)
     {

@@ -10,7 +10,12 @@ public class Item : MonoBehaviour
     public GameObject worldPrefab;   // dùng khi drop ra map
     public GameObject uiPrefab;      // dùng khi vào inventory
 
-    [SerializeField] private TMP_Text quantityText; 
+    [SerializeField] private TMP_Text quantityText;
+
+    //shpo fields
+    public int buyPrice = 10;
+    [Range(0,1)]
+    public float sellPriceMultiplier = 0.5f; // 50% of buy price
 
     private void Awake()
     {
@@ -19,6 +24,11 @@ public class Item : MonoBehaviour
             quantityText = GetComponentInChildren<TMP_Text>(true);
         }
         
+    }
+
+    public int GetSellPrice()
+    {
+        return Mathf.RoundToInt(buyPrice * sellPriceMultiplier);
     }
 
     void Start()

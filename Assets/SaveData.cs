@@ -9,7 +9,7 @@ public class SaveData
     public List<InventorySaveData> inventorySaveData;
     public List<InventorySaveData> hotbarSaveData;
     public List<ChestSaveData> chestSaveData; 
-    public List<QuestProgress> questProgressData; 
+    public List<QuestSaveData> questProgressData; 
 
 }
 
@@ -18,4 +18,18 @@ public class  ChestSaveData
 {
     public string ChestID;
     public bool isOpen;
+}
+
+[System.Serializable]
+public class QuestSaveData
+{
+    public string questID;
+    public List<ObjectiveSaveData> objectives;
+}
+
+[System.Serializable]
+public class ObjectiveSaveData
+{
+    public string objectiveID;
+    public int currentAmount;
 }

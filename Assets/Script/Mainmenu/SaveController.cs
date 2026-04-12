@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class SaveController : MonoBehaviour
 {
@@ -64,8 +65,7 @@ public class SaveController : MonoBehaviour
             inventorySaveData = inventoryController.GetInventoryItems(),
             hotbarSaveData = hotbarController.GetHotbarItems(),
             chestSaveData = GetChestStates(),
-            questProgressData = QuestController.Instance.activateQuests, 
-
+            questProgressData = QuestController.Instance.GetQuestSaveData(),
         };
         File.WriteAllText(saveLocation, JsonUtility.ToJson(saveData));
     }

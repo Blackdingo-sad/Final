@@ -79,3 +79,44 @@ public class QuestProgress
 
     public string QuestID => quest.questID;
 }
+
+public class QuestDictionary : MonoBehaviour
+{
+    public static QuestDictionary Instance { get; private set; }
+
+    public List<Quest> quests;
+
+    private Dictionary<string, Quest> questLookup;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        questLookup = new Dictionary<string, Quest>();
+        foreach (Quest quest in quests)
+        {
+            if (quest != null && !questLookup.ContainsKey(quest.questID))
+            {
+                questLookup[quest.questID] = quest;
+            }
+        }
+    }
+
+    public Quest GetQuest(string questID)
+    {
+        if (questLookup == null || !questLookup.TryGetValue(questID, out Quest quest))
+        {
+            Debug.LogWarning($"Quest with ID {questID} not found in QuestDictionary.");
+            return null;
+        }
+        return quest;
+    }
+}
