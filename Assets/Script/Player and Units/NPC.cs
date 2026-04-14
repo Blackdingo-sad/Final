@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using System.Collections;
 
@@ -198,6 +199,22 @@ public class NPC : MonoBehaviour, IInteractable
         dialogueUI.SetDialogueText(string.Empty);
         dialogueUI.ShowDialogueUI(false);
         PauseController.SetPause(false);
+    }
+
+    void Update()
+    {
+        if (isDialogueActive && Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            {
+                var selected = EventSystem.current.currentSelectedGameObject;
+                if (selected != null && selected.GetComponent<Button>() != null)
+                {
+                    return;
+                }
+            }
+            NextLine();
+        }
     }
 
     private bool playerInRange = false;

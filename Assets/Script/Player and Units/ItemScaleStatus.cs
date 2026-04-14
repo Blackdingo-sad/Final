@@ -8,11 +8,13 @@ public class ItemScaleStatus : MonoBehaviour
 
     private RectTransform rectTransform;
     private Transform cachedTransform;
+    private CanvasGroup canvasGroup;
 
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         cachedTransform = transform;
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     void Update()
@@ -39,7 +41,11 @@ public class ItemScaleStatus : MonoBehaviour
 
         if (rectTransform != null)
         {
-            rectTransform.anchoredPosition = Vector2.zero;
+            bool isDragging = canvasGroup != null && !canvasGroup.blocksRaycasts;
+            if (!isDragging)
+            {
+                rectTransform.anchoredPosition = Vector2.zero;
+            }
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -10,6 +11,9 @@ public class SaveData
     public List<InventorySaveData> hotbarSaveData;
     public List<ChestSaveData> chestSaveData; 
     public List<QuestSaveData> questProgressData; 
+
+    public int playerGold; // Lưu lượng vàng của player
+    public List<ShopInstanceData> shopStates = new();
 
 }
 
@@ -25,6 +29,20 @@ public class QuestSaveData
 {
     public string questID;
     public List<ObjectiveSaveData> objectives;
+}
+
+[System.Serializable]
+public class ShopInstanceData
+{
+    public string shopID;
+    public List<ShopItemData> stock = new();
+}
+
+[System.Serializable]
+public class ShopItemData
+{
+    public int itemID;
+    public int quantity;
 }
 
 [System.Serializable]

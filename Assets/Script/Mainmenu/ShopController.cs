@@ -67,6 +67,7 @@ public class ShopController : MonoBehaviour
             shopTitleText.text = shop.shopkeeperName + "'s Shop";
         }
         RefreshShopDisplay();
+        RefreshPlayerInventoryDisplay();
 
         PauseController.SetPause(true);
     }
@@ -103,11 +104,8 @@ public class ShopController : MonoBehaviour
 
         foreach (var stockItem in currentShop.GetCurrentStock())
         {
-            GameObject slot = Instantiate(shopSlotPrefab, shopInventoryGrid);
-            if (itemDictionary != null)
-            {
-                if (stockItem.quantity < 0) continue;
-            }
+            if (itemDictionary == null || stockItem.quantity < 0) continue;
+            CreateShopSlot(shopInventoryGrid, stockItem.itemID, stockItem.quantity, true);
         }
     }
     public void RefreshPlayerInventoryDisplay()
@@ -116,7 +114,7 @@ public class ShopController : MonoBehaviour
         {
             return;
         }
-        foreach (Transform child in shopInventoryGrid)
+        foreach (Transform child in playerInventoryGrid)
         {
             Destroy(child.gameObject);
         }
@@ -129,8 +127,73 @@ public class ShopController : MonoBehaviour
                 if (inventorySlot.currentItem != null)
                 {
                     Item originalItem = inventorySlot.currentItem.GetComponent<Item>();
+                    CreateShopSlot(playerInventoryGrid, originalItem.ID, originalItem.quantity, false, inventorySlot);
                 }
             }
         }
+    }
+
+    private void CreateShopSlot(Transform grid, int itemID, int quantity, bool isShop, Slot originalSlot = null)
+    {
+        GameObject slotObj = Instantiate(shopSlotPrefab, grid);
+        GameObject itemPrefab = itemDictionary.GetItemPrefab(itemID);
+        if (itemPrefab == null) return;
+
+        Item sourceItem = itemPrefab.GetComponent<Item>();
+        GameObject prefabToInstantiate = sourceItem != null && sourceItem.uiPrefab != null ? sourceItem.uiPrefab : itemPrefab;
+
+        GameObject itemInstance = Instantiate(prefabToInstantiate, slotObj.transform);
+        itemInstance.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+        if (itemInstance.GetComponent<CanvasGroup>() == null)
+        {
+            itemInstance.AddComponent<CanvasGroup>();
+        }
+        if (itemInstance.GetComponent<ItemDragHandler>() == null)
+        {
+            itemInstance.AddComponent<ItemDragHandler>();
+        }
+
+        Item item = itemInstance.GetComponent<Item>();
+        if (sourceItem != null)
+        {
+            item.ID = sourceItem.ID;
+        }
+        item.quantity = quantity;
+        item.UpdateQuantityDisplay();
+
+        int price = isShop ? item.buyPrice : item.GetSellPrice();
+
+        ShopSlot slot = slotObj.GetComponent<ShopSlot>();
+        slot.isShopSlot = isShop;
+        slot.SetItem(itemInstance, price);
+
+        ItemDragHandler dragHandler = itemInstance.GetComponent<ItemDragHandler>();
+        if (dragHandler)
+        {
+            dragHandler.enabled = false;
+
+            ShopItemHandler handler = itemInstance.AddComponent<ShopItemHandler>();
+            handler.Initialise(isShop);
+            if (!isShop)
+            {
+                handler.originalInventorySlot = originalSlot;
+            }
+        }
+    }
+
+    public void AddItemToShop(int itemID, int quantity)
+    {
+        if (!currentShop) return;
+        currentShop.AddtoStock(itemID, quantity);
+        RefreshShopDisplay();
+    }
+
+    public bool RemoveItemFromShop(int itemID, int quantity)
+    {
+        if (!currentShop) return false;
+        bool success = currentShop.RemoveFromStock(itemID, quantity);
+        if (success) RefreshShopDisplay();
+        return success;
     }
 }
