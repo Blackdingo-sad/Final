@@ -43,9 +43,9 @@ public class ScreenFader : MonoBehaviour
         SetDamping(Vector3.zero);
     }
     public async Task FadeIn() 
-        { 
-        await Fade(0);
+    { 
         SetDamping(originalDamping);
+        await Fade(0);
     }
     void SetDamping(Vector3 d)
     {
@@ -54,7 +54,7 @@ public class ScreenFader : MonoBehaviour
             return;
         }
         transposer.m_XDamping = d.x;
-        transposer.m_XDamping = d.y;
-        transposer.m_XDamping = d.z;
+        transposer.m_YDamping = d.y;
+        transposer.m_ZDamping = d.z;
     }
 }

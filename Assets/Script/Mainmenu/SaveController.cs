@@ -69,6 +69,7 @@ public class SaveController : MonoBehaviour
             hotbarSaveData = hotbarController.GetHotbarItems(),
             chestSaveData = GetChestStates(),
             questProgressData = QuestController.Instance.GetQuestSaveData(),
+            handinQuestIDs = QuestController.Instance.handinQuestIDs,
             playerGold = CurrencyController.Instance.GetGold(),
             shopStates = GetShopStates()
         };
@@ -161,6 +162,7 @@ public class SaveController : MonoBehaviour
             CurrencyController.Instance.SetGold(saveData.playerGold);
 
             QuestController.Instance.LoadQuestProgress(saveData.questProgressData);
+            QuestController.Instance.handinQuestIDs = saveData.handinQuestIDs;
         }
         else
         {

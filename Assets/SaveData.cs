@@ -11,6 +11,7 @@ public class SaveData
     public List<InventorySaveData> hotbarSaveData;
     public List<ChestSaveData> chestSaveData; 
     public List<QuestSaveData> questProgressData; 
+    public List<string> handinQuestIDs;
 
     public int playerGold; // Lưu lượng vàng của player
     public List<ShopInstanceData> shopStates = new();
