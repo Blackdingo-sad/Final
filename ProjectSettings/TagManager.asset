@@ -52,14 +52,14 @@ TagManager:
   - name: blockobject
     uniqueID: 134183427
     locked: 0
+  - name: roof
+    uniqueID: 1449741937
+    locked: 0
   - name: Decor
     uniqueID: 2031321437
     locked: 0
   - name: player
     uniqueID: 1423084545
-    locked: 0
-  - name: roof
-    uniqueID: 1449741937
     locked: 0
   m_RenderingLayers:
   - Default

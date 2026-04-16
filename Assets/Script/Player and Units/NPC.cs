@@ -197,10 +197,21 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void EndDialogue()
     {
-        if(questState == QuestState.Completed && QuestController.Instance.IsQuestHandedIn(dialogueData.quest.questID))
+        // Auto hand-in quest when talking to NPC after completing quest
+        if (dialogueData.quest != null && questState == QuestState.Completed)
         {
-            HandleQuestCompletion(dialogueData.quest);
+            string questID = dialogueData.quest.questID;
+            if (QuestController.Instance.IsQuestCompleted(questID) && !QuestController.Instance.IsQuestHandedIn(questID))
+            {
+                QuestController.Instance.HandInQuest(questID);
+                Debug.Log($"Quest '{dialogueData.quest.questName}' auto handed-in via NPC dialogue.");
+            }
         }
+
+        // if(questState == QuestState.Completed && QuestController.Instance.IsQuestHandedIn(dialogueData.quest.questID))
+        // {
+        //     HandleQuestCompletion(dialogueData.quest);
+        // }
 
         StopAllCoroutines();
         isDialogueActive = false;
@@ -209,10 +220,11 @@ public class NPC : MonoBehaviour, IInteractable
         PauseController.SetPause(false);
     }
 
-    void HandleQuestCompletion(Quest quest)
-    {
-        QuestController.Instance.HandInQuest(quest.questID);
-    }
+    // Old code (comment):
+    // void HandleQuestCompletion(Quest quest)
+    // {
+    //     QuestController.Instance.HandInQuest(quest.questID);
+    // }
 
     void Update()
     {

@@ -103,7 +103,57 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         RectTransform rect = rectTransform != null ? rectTransform : GetComponent<RectTransform>();
         Slot originalSlot = originalParent != null ? originalParent.GetComponent<Slot>() : null;
 
-        // 1. DROP nếu kéo ra ngoài inventory
+        // 1. Tìm slot thả vào trước (hỗ trợ kéo giữa Inventory <-> Hotbar)
+        Slot dropSlot = null;
+        if (eventData.pointerEnter != null)
+        {
+            dropSlot = eventData.pointerEnter.GetComponent<Slot>()
+                       ?? eventData.pointerEnter.GetComponentInParent<Slot>();
+        }
+
+        // 2. Nếu thả vào slot hợp lệ
+        if (dropSlot != null && originalSlot != null)
+        {
+            // thả vào chính slot cũ
+            if (dropSlot == originalSlot)
+            {
+                transform.SetParent(originalParent);
+                rect.anchoredPosition = Vector2.zero;
+                return;
+            }
+
+            // slot trống -> move
+            if (dropSlot.currentItem == null)
+            {
+                transform.SetParent(dropSlot.transform);
+                rect.anchoredPosition = Vector2.zero;
+
+                dropSlot.currentItem = gameObject;
+                originalSlot.currentItem = null;
+                return;
+            }
+
+            // slot có item -> swap
+            GameObject targetItem = dropSlot.currentItem;
+            dropSlot.currentItem = gameObject;
+            originalSlot.currentItem = targetItem;
+
+            if (targetItem != null)
+            {
+                targetItem.transform.SetParent(originalSlot.transform);
+                RectTransform targetRect = targetItem.GetComponent<RectTransform>();
+                if (targetRect != null)
+                {
+                    targetRect.anchoredPosition = Vector2.zero;
+                }
+            }
+
+            transform.SetParent(dropSlot.transform);
+            rect.anchoredPosition = Vector2.zero;
+            return;
+        }
+
+        // 3. Không thả vào slot nào: nếu ra ngoài inventory thì drop xuống đất, còn không thì trả về
         if (!IsWithinInventory(eventData.position))
         {
             if (originalSlot != null)
@@ -113,67 +163,7 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             return;
         }
 
-        // 2. Tìm slot thả vào
-        Slot dropSlot = null;
-
-        if (eventData.pointerEnter != null)
-        {
-            dropSlot = eventData.pointerEnter.GetComponent<Slot>();
-
-            if (dropSlot == null)
-            {
-                dropSlot = eventData.pointerEnter.GetComponentInParent<Slot>();
-            }
-        }
-
-        // 3. Nếu không hợp lệ → trả về slot cũ
-        if (dropSlot == null || originalSlot == null)
-        {
-            transform.SetParent(originalParent);
-            rect.anchoredPosition = Vector2.zero;
-            return;
-        }
-
-        // 4. Nếu thả vào chính slot cũ → reset
-        if (dropSlot == originalSlot)
-        {
-            transform.SetParent(originalParent);
-            rect.anchoredPosition = Vector2.zero;
-            return;
-        }
-
-        // 5. SLOT TRỐNG → MOVE
-        if (dropSlot.currentItem == null)
-        {
-            transform.SetParent(dropSlot.transform);
-            rect.anchoredPosition = Vector2.zero;
-
-            dropSlot.currentItem = gameObject;
-            originalSlot.currentItem = null;
-            return;
-        }
-
-        // 6. SLOT CÓ ITEM → SWAP
-        GameObject targetItem = dropSlot.currentItem;
-
-        // swap reference
-        dropSlot.currentItem = gameObject;
-        originalSlot.currentItem = targetItem;
-
-        // move item cũ về slot ban đầu
-        if (targetItem != null)
-        {
-            targetItem.transform.SetParent(originalSlot.transform);
-
-            RectTransform targetRect = targetItem.GetComponent<RectTransform>();
-            if (targetRect != null)
-            {
-                targetRect.anchoredPosition = Vector2.zero;
-            }
-        }
-
-        // move item hiện tại sang slot mới
-        transform.SetParent(dropSlot.transform);
+        transform.SetParent(originalParent);
         rect.anchoredPosition = Vector2.zero;
     }
 
@@ -188,26 +178,65 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     void DropItem(Slot originalSlot)
     {
-        originalSlot.currentItem = null;
+        Item item = GetComponent<Item>();
+        if (item == null)
+        {
+            transform.SetParent(originalParent);
+            RectTransform rect = rectTransform != null ? rectTransform : GetComponent<RectTransform>();
+            rect.anchoredPosition = Vector2.zero;
+            return;
+        }
 
         // FindPlayer
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (playerTransform == null)
         {
             Debug.LogError("Missing 'player' tag");
+            transform.SetParent(originalParent);
+            RectTransform rect = rectTransform != null ? rectTransform : GetComponent<RectTransform>();
+            rect.anchoredPosition = Vector2.zero;
             return;
         }
+
+        // Resolve world drop prefab
+        GameObject worldDropPrefab = item.worldPrefab;
+        if (worldDropPrefab == null)
+        {
+            ItemDictionary dictionary = Object.FindAnyObjectByType<ItemDictionary>();
+            if (dictionary != null)
+            {
+                GameObject sourcePrefab = dictionary.GetItemPrefab(item.ID);
+                if (sourcePrefab != null)
+                {
+                    Item sourceItem = sourcePrefab.GetComponent<Item>();
+                    worldDropPrefab = sourceItem != null && sourceItem.worldPrefab != null ? sourceItem.worldPrefab : sourcePrefab;
+                }
+            }
+        }
+
+        if (worldDropPrefab == null)
+        {
+            Debug.LogWarning($"Cannot drop item ID {item.ID}: world prefab is missing.");
+            transform.SetParent(originalParent);
+            RectTransform rect = rectTransform != null ? rectTransform : GetComponent<RectTransform>();
+            rect.anchoredPosition = Vector2.zero;
+            return;
+        }
+
         // Random drop position around player
         Vector2 dropOffset = Random.insideUnitCircle.normalized * Random.Range(minDropDistance, maxDropDistance);
         Vector2 dropPosition = (Vector2)playerTransform.position + dropOffset;
 
-        //Destroy the UI one
-        Item item = GetComponent<Item>();
-
-        if (item != null && item.worldPrefab != null)
+        GameObject dropped = Instantiate(worldDropPrefab, dropPosition, Quaternion.identity);
+        Item droppedItem = dropped.GetComponent<Item>();
+        if (droppedItem != null)
         {
-            Instantiate(item.worldPrefab, dropPosition, Quaternion.identity);
+            droppedItem.ID = item.ID;
+            droppedItem.quantity = item.quantity;
+            droppedItem.UpdateQuantityDisplay();
         }
+
+        originalSlot.currentItem = null;
         Destroy(gameObject);
 
         InventoryController.Instance.RebuildItemCounts();

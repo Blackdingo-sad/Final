@@ -264,11 +264,22 @@ public class InventoryController : MonoBehaviour
             if (amountToRemove <= 0) break;
 
             Slot slot = slotTranform.GetComponent<Slot>();
-            if (slot?.currentItem?.GetComponent<Item>() is Item item && item.ID == itemID)
+            if (slot == null || slot.currentItem == null) continue;
+
+            Item item = slot.currentItem.GetComponent<Item>();
+            if (item != null && item.ID == itemID)
             {
                 int removed = Mathf.Min(amountToRemove, item.quantity);
                 item.RemoveFromStack(removed);
+                amountToRemove -= removed;
+
+                if (item.quantity <= 0)
+                {
+                    Destroy(slot.currentItem);
+                    slot.currentItem = null;
+                }
             }
         }
+        RebuildItemCounts();
     }
 }
