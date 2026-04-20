@@ -1,0 +1,637 @@
+fileFormatVersion: 2
+guid: f340563c28507934daecee9120a53419
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7837465544362961944
+    second: Door1_pipo_0
+  - first:
+      213: 6858749808672062575
+    second: Door1_pipo_1
+  - first:
+      213: -3053864258934177642
+    second: Door1_pipo_2
+  - first:
+      213: -129219495170882171
+    second: Door1_pipo_3
+  - first:
+      213: -4671800912250220316
+    second: Door1_pipo_4
+  - first:
+      213: 4981607790327837144
+    second: Door1_pipo_5
+  - first:
+      213: 3471660687634138731
+    second: Door1_pipo_6
+  - first:
+      213: 6485183680583988657
+    second: Door1_pipo_7
+  - first:
+      213: -3386562980385809763
+    second: Door1_pipo_8
+  - first:
+      213: -7498043059193118782
+    second: Door1_pipo_9
+  - first:
+      213: -9141248729353806968
+    second: Door1_pipo_10
+  - first:
+      213: -4962117951231432607
+    second: Door1_pipo_11
+  - first:
+      213: 893768026290445078
+    second: Door1_pipo_12
+  - first:
+      213: 6774606129959066073
+    second: Door1_pipo_13
+  - first:
+      213: -8439504772397593794
+    second: Door1_pipo_14
+  - first:
+      213: 5019020415351438550
+    second: Door1_pipo_15
+  - first:
+      213: -1728832718776618416
+    second: Door1_pipo_16
+  - first:
+      213: -293355437349005106
+    second: Door1_pipo_17
+  - first:
+      213: 6639364952124321305
+    second: Door1_pipo_18
+  - first:
+      213: 156512243167372090
+    second: Door1_pipo_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Door1_pipo_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 289
+        width: 33
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81c2e1f436544cc60800000000000000
+      internalID: 7837465544362961944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_1
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 291
+        width: 26
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6c3d2d9c9c2f2f50800000000000000
+      internalID: 6858749808672062575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_2
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 289
+        width: 43
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69087f5f2ae7e95d0800000000000000
+      internalID: -3053864258934177642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_3
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 291
+        width: 28
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 585c844cd8be43ef0800000000000000
+      internalID: -129219495170882171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_4
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 293
+        width: 11
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e0daf392dd6a2fb0800000000000000
+      internalID: -4671800912250220316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 193
+        width: 33
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d13fc044e9322540800000000000000
+      internalID: 4981607790327837144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_6
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 195
+        width: 28
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b660f137001dd2030800000000000000
+      internalID: 3471660687634138731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_7
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 193
+        width: 42
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b57e509230000a50800000000000000
+      internalID: 6485183680583988657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_8
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 195
+        width: 28
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9a9d9089e28001d0800000000000000
+      internalID: -3386562980385809763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_9
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 197
+        width: 10
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cff532609991f790800000000000000
+      internalID: -7498043059193118782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 97
+        width: 33
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88b106b86b2c32180800000000000000
+      internalID: -9141248729353806968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_11
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 99
+        width: 26
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 168e2478304032bb0800000000000000
+      internalID: -4962117951231432607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_12
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 97
+        width: 43
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61bd4a6d84d476c00800000000000000
+      internalID: 893768026290445078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_13
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 99
+        width: 28
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d9d46db16c340e50800000000000000
+      internalID: 6774606129959066073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_14
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 101
+        width: 11
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3b0709bf1bd0ea80800000000000000
+      internalID: -8439504772397593794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 33
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dcb471d97427a540800000000000000
+      internalID: 5019020415351438550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_16
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 3
+        width: 26
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0523f315dc3f108e0800000000000000
+      internalID: -1728832718776618416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_17
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 1
+        width: 42
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec812e3b8cacdebf0800000000000000
+      internalID: -293355437349005106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_18
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 3
+        width: 26
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91e6c814f33c32c50800000000000000
+      internalID: 6639364952124321305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door1_pipo_19
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 5
+        width: 8
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a33adf05e0b0c2200800000000000000
+      internalID: 156512243167372090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Door1_pipo_0: 7837465544362961944
+      Door1_pipo_1: 6858749808672062575
+      Door1_pipo_10: -9141248729353806968
+      Door1_pipo_11: -4962117951231432607
+      Door1_pipo_12: 893768026290445078
+      Door1_pipo_13: 6774606129959066073
+      Door1_pipo_14: -8439504772397593794
+      Door1_pipo_15: 5019020415351438550
+      Door1_pipo_16: -1728832718776618416
+      Door1_pipo_17: -293355437349005106
+      Door1_pipo_18: 6639364952124321305
+      Door1_pipo_19: 156512243167372090
+      Door1_pipo_2: -3053864258934177642
+      Door1_pipo_3: -129219495170882171
+      Door1_pipo_4: -4671800912250220316
+      Door1_pipo_5: 4981607790327837144
+      Door1_pipo_6: 3471660687634138731
+      Door1_pipo_7: 6485183680583988657
+      Door1_pipo_8: -3386562980385809763
+      Door1_pipo_9: -7498043059193118782
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

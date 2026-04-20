@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
     private Animator animator;
     public int numCarrotSeed = 0;
+
+    public Transform Aim;
+    bool isWalking = false;
+    Vector2 lastDirection = Vector2.right;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,6 +38,26 @@ public class PlayerMovement : MonoBehaviour
 
         rb.linearVelocity = moveInput * moveSpeed;
         animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+
+        // C?p nh?t h??ng nhìn cu?i cùng (4 h??ng: lên/xu?ng/trái/ph?i)
+        if (moveInput.magnitude > 0.1f)
+        {
+            if (Mathf.Abs(moveInput.x) >= Mathf.Abs(moveInput.y))
+                lastDirection = moveInput.x > 0 ? Vector2.right : Vector2.left;
+            else
+                lastDirection = moveInput.y > 0 ? Vector2.up : Vector2.down;
+        }
+
+        // Xoay Aim theo h??ng nhân v?t
+        if (Aim != null)
+        {
+            float angle = Mathf.Atan2(lastDirection.y, lastDirection.x) * Mathf.Rad2Deg;
+            Aim.rotation = Quaternion.Euler(0f, 0f, angle);
+        }
+    }
+    private void FixedUpdate()
+    {
+    
     }
 
     void StopMovementAnimations()

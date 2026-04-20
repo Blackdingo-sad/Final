@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Undefined
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -60,6 +61,12 @@ TagManager:
     locked: 0
   - name: player
     uniqueID: 1423084545
+    locked: 0
+  - name: Enemy
+    uniqueID: 359694127
+    locked: 0
+  - name: DecorOver
+    uniqueID: 1546662853
     locked: 0
   m_RenderingLayers:
   - Default
