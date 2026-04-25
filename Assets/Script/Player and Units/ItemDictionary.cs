@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,6 +42,13 @@ public class ItemDictionary : MonoBehaviour
             {
                 itemDictionary[item.ID] = item.gameObject;
             }
+        }
+
+        // Debug: in ra toàn bộ item đã đăng ký
+        foreach (var pair in itemDictionary)
+        {
+            Item registeredItem = pair.Value.GetComponent<Item>();
+            Debug.Log($"[ItemDictionary] ID={pair.Key} → {registeredItem?.Name} ({registeredItem?.itemType})");
         }
     }
 

@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerClickHandler
 {
     Transform originalParent;
     CanvasGroup canvasGroup;
@@ -42,6 +42,112 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             Canvas parentCanvas = GetComponentInParent<Canvas>();
             if (parentCanvas != null) rootCanvas = parentCanvas.rootCanvas;
         }
+
+        // Đảm bảo root Image nhận raycast để drag hoạt động
+        // Tắt raycastTarget trên child TMP_Text (text số lượng) để tránh chặn click
+        // KHÔNG tắt child Image (icon) vì nó cần bubble event lên ItemDragHandler
+        UnityEngine.UI.Graphic rootGraphic = GetComponent<UnityEngine.UI.Graphic>();
+        if (rootGraphic != null)
+        {
+            rootGraphic.raycastTarget = true;
+        }
+        foreach (TMPro.TMP_Text text in GetComponentsInChildren<TMPro.TMP_Text>(true))
+        {
+            text.raycastTarget = false;
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log($"[ItemDragHandler] PointerDown on: {gameObject.name}, pointerEnter: {eventData.pointerEnter?.name}, pointerPress: {eventData.pointerPress?.name}");
+        if (eventData.pointerEnter != null)
+        {
+            Debug.Log($"[ItemDragHandler] pointerEnter hierarchy: {GetHierarchy(eventData.pointerEnter.transform)}");
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // Seed selection mode: click bất kỳ item nào để chọn trồng
+        if (SeedSelectionManager.Instance != null && SeedSelectionManager.Instance.IsSelecting)
+        {
+            Item item = GetComponent<Item>();
+            if (item != null)
+                SeedSelectionManager.Instance.TrySelectItem(item);
+            return;
+        }
+
+        if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))
+            return;
+
+        Slot currentSlot = transform.parent.GetComponent<Slot>();
+        if (currentSlot == null) return;
+
+        // Xác định item đang ở inventory hay hotbar
+        InventoryController inventory = InventoryController.Instance;
+        HotbarController hotbar = Object.FindFirstObjectByType<HotbarController>();
+
+        if (inventory == null || hotbar == null) return;
+
+        bool isInInventory = transform.parent.parent == inventory.inventoryPanel.transform;
+
+        if (isInInventory)
+        {
+            // Di chuyển từ inventory → hotbar slot trống đầu tiên
+            Slot targetSlot = hotbar.FindFirstEmptySlot();
+            if (targetSlot == null)
+            {
+                Debug.Log("[Ctrl+Click] Hotbar is full!");
+                return;
+            }
+            MoveToSlot(currentSlot, targetSlot);
+            Debug.Log($"[Ctrl+Click] Moved {gameObject.name} from Inventory → Hotbar");
+        }
+        else
+        {
+            // Di chuyển từ hotbar → inventory slot trống đầu tiên
+            Slot targetSlot = FindFirstEmptySlotInPanel(inventory.inventoryPanel.transform);
+            if (targetSlot == null)
+            {
+                Debug.Log("[Ctrl+Click] Inventory is full!");
+                return;
+            }
+            MoveToSlot(currentSlot, targetSlot);
+            Debug.Log($"[Ctrl+Click] Moved {gameObject.name} from Hotbar → Inventory");
+        }
+    }
+
+    void MoveToSlot(Slot fromSlot, Slot toSlot)
+    {
+        transform.SetParent(toSlot.transform);
+        GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        toSlot.currentItem = gameObject;
+        fromSlot.currentItem = null;
+
+        if (InventoryController.Instance != null)
+            InventoryController.Instance.RebuildItemCounts();
+    }
+
+    Slot FindFirstEmptySlotInPanel(Transform panel)
+    {
+        foreach (Transform child in panel)
+        {
+            Slot slot = child.GetComponent<Slot>();
+            if (slot != null && slot.currentItem == null)
+                return slot;
+        }
+        return null;
+    }
+
+    string GetHierarchy(Transform t)
+    {
+        string path = t.name;
+        while (t.parent != null)
+        {
+            t = t.parent;
+            path = t.name + "/" + path;
+        }
+        return path;
     }
 
     // Update is called once per frame
@@ -103,12 +209,21 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         RectTransform rect = rectTransform != null ? rectTransform : GetComponent<RectTransform>();
         Slot originalSlot = originalParent != null ? originalParent.GetComponent<Slot>() : null;
 
-        // 1. Tìm slot thả vào trước (hỗ trợ kéo giữa Inventory <-> Hotbar)
+        // 1. Tìm slot bằng cách kiểm tra bounds - không phụ thuộc vào raycastTarget
         Slot dropSlot = null;
-        if (eventData.pointerEnter != null)
+        foreach (Slot slot in Object.FindObjectsOfType<Slot>())
         {
-            dropSlot = eventData.pointerEnter.GetComponent<Slot>()
-                       ?? eventData.pointerEnter.GetComponentInParent<Slot>();
+            RectTransform slotRect = slot.GetComponent<RectTransform>();
+            if (slotRect != null && RectTransformUtility.RectangleContainsScreenPoint(slotRect, eventData.position))
+            {
+                dropSlot = slot;
+                Debug.Log($"[ItemDragHandler] Drop target slot: {slot.gameObject.name}");
+                break;
+            }
+        }
+        if (dropSlot == null)
+        {
+            Debug.Log("[ItemDragHandler] No slot found under cursor on EndDrag");
         }
 
         // 2. Nếu thả vào slot hợp lệ

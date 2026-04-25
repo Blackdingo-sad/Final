@@ -9,7 +9,7 @@ public class MapTransation : MonoBehaviour
     [SerializeField] private Transform teleportTargetPosition;
     [SerializeField] private float additivePos = 2f;
 
-    private bool isTransitioning;
+    private static bool isTransitioning;
 
     private enum Direction
     {
@@ -22,6 +22,7 @@ public class MapTransation : MonoBehaviour
 
     private void Awake()
     {
+        isTransitioning = false;
         confiner = FindFirstObjectByType<CinemachineConfiner2D>();
     }
 
@@ -76,6 +77,12 @@ public class MapTransation : MonoBehaviour
         {
             if (teleportTargetPosition != null)
             {
+                Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    rb.position = teleportTargetPosition.position;
+                }
                 player.transform.position = teleportTargetPosition.position;
             }
             return;

@@ -1,11 +1,13 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class TabController : MonoBehaviour
 {
     public Image[] tabImages;
     public GameObject[] pages;
-    public GameObject itemPopupContainer; // Gán ItemPopupContainer vào ?ây trong Inspector
+    public GameObject itemPopupContainer; // GÃ¡n ItemPopupContainer vÃ o Ä‘Ã¢y trong Inspector
+
+    private int lastActiveTab = 0;
 
     void Start()
     {
@@ -13,8 +15,8 @@ public class TabController : MonoBehaviour
         ActivateTab(0);
     }
 
-    // T?t Raycast Target trên t?t c? background Image trong các page
-    // ?? tránh b? block click vào tab buttons
+    // T?t Raycast Target trÃªn t?t c? background Image trong cÃ¡c page
+    // ?? trÃ¡nh b? block click vÃ o tab buttons
     private void DisablePageRaycast()
     {
         foreach (GameObject page in pages)
@@ -22,8 +24,8 @@ public class TabController : MonoBehaviour
             Image[] images = page.GetComponentsInChildren<Image>(true);
             foreach (Image img in images)
             {
-                // Ch? t?t raycast trên Image tr?c ti?p c?a page (background)
-                // không t?t raycast trên các Button/Interactive elements bên trong
+                // Ch? t?t raycast trÃªn Image tr?c ti?p c?a page (background)
+                // khÃ´ng t?t raycast trÃªn cÃ¡c Button/Interactive elements bÃªn trong
                 if (img.GetComponent<Button>() == null &&
                     img.GetComponent<UnityEngine.EventSystems.EventTrigger>() == null)
                 {
@@ -41,7 +43,7 @@ public class TabController : MonoBehaviour
     {
         Debug.Log($"ActivateTab called with index: {tabNO}");
 
-        // ?n ItemPopupContainer khi chuy?n tab ?? tránh b? che
+        // ?n ItemPopupContainer khi chuy?n tab ?? trÃ¡nh b? che
         if (itemPopupContainer != null)
         {
             itemPopupContainer.SetActive(false);
@@ -54,7 +56,18 @@ public class TabController : MonoBehaviour
         }
         pages[tabNO].SetActive(true);
         tabImages[tabNO].color = Color.white;
+        lastActiveTab = tabNO;
 
         Debug.Log($"ActivateTab done: {pages[tabNO].name} is now active");
     }
+
+    // Khi Ä‘Ã³ng menu, báº­t láº¡i ItemPopupContainer náº¿u nÃ³ tá»“n táº¡i
+    public void OnCloseMenu()
+    {
+        if (itemPopupContainer != null)
+        {
+            itemPopupContainer.SetActive(true);
+        }
+    }
 }
+

@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float interactRange = 1.2f;
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Animator animator;
@@ -15,6 +16,16 @@ public class PlayerMovement : MonoBehaviour
     public Transform Aim;
     bool isWalking = false;
     Vector2 lastDirection = Vector2.right;
+
+    // Auto-move to target
+    private Transform _moveTarget;
+    private IInteractable _pendingInteract;
+
+    public void MoveToAndInteract(Transform target, IInteractable interactable)
+    {
+        _moveTarget = target;
+        _pendingInteract = interactable;
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,10 +47,43 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        PlayerFarming farming = GetComponent<PlayerFarming>();
+        if (farming != null && farming.IsBusy)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        // Auto-move to target plot on click
+        if (_moveTarget != null)
+        {
+            Vector2 dir = (Vector2)_moveTarget.position - (Vector2)transform.position;
+            if (dir.magnitude <= interactRange)
+            {
+                _pendingInteract?.Interact();
+                _moveTarget = null;
+                _pendingInteract = null;
+                rb.linearVelocity = Vector2.zero;
+            }
+            else
+            {
+                rb.linearVelocity = dir.normalized * moveSpeed;
+                animator.SetBool("isWalking", true);
+            }
+            return;
+        }
+
+        // Manual input cancels auto-move
+        if (moveInput.magnitude > 0.1f)
+        {
+            _moveTarget = null;
+            _pendingInteract = null;
+        }
+
         rb.linearVelocity = moveInput * moveSpeed;
         animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
 
-        // C?p nh?t h??ng nhìn cu?i cùng (4 h??ng: lên/xu?ng/trái/ph?i)
+        // Update last facing direction (4 directions: up/down/left/right)
         if (moveInput.magnitude > 0.1f)
         {
             if (Mathf.Abs(moveInput.x) >= Mathf.Abs(moveInput.y))
@@ -48,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
                 lastDirection = moveInput.y > 0 ? Vector2.up : Vector2.down;
         }
 
-        // Xoay Aim theo h??ng nhân v?t
+        // Rotate Aim transform to match facing direction
         if (Aim != null)
         {
             float angle = Mathf.Atan2(lastDirection.y, lastDirection.x) * Mathf.Rad2Deg;

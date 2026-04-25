@@ -1,9 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// ??t script này lên prefab FarmTile (ô ??t ?ã cu?c).
-/// Tr?ng thái: Tilled ? Seeded ? Growing ? Ready
-/// </summary>
 public class FarmTile : MonoBehaviour, IInteractable
 {
     public enum FarmState { Tilled, Seeded, Growing, Ready }
@@ -36,9 +32,7 @@ public class FarmTile : MonoBehaviour, IInteractable
         }
     }
 
-    /// <summary>
-    /// Tr?ng h?t gi?ng lên ô ??t này.
-    /// </summary>
+
     public bool TryPlant(CropData data)
     {
         if (state != FarmState.Tilled) return false;
@@ -46,8 +40,6 @@ public class FarmTile : MonoBehaviour, IInteractable
         cropData = data;
         growTimer = cropData.growTime;
         SetState(FarmState.Seeded);
-
-        // B?t ??u t?ng tr??ng ngay sau 1 frame
         Invoke(nameof(StartGrowing), 0.1f);
         return true;
     }
@@ -59,17 +51,19 @@ public class FarmTile : MonoBehaviour, IInteractable
 
     private void Harvest()
     {
-        if (cropData == null || cropData.harvestItemPrefab == null) return;
+        if (cropData == null || cropData.harvestItems == null) return;
 
-        for (int i = 0; i < cropData.harvestQuantity; i++)
+        foreach (HarvestEntry entry in cropData.harvestItems)
         {
-            Vector2 offset = Random.insideUnitCircle * 0.5f;
-            Instantiate(cropData.harvestItemPrefab,
-                        (Vector2)transform.position + offset,
-                        Quaternion.identity);
+            if (entry.itemPrefab == null) continue;
+            for (int i = 0; i < entry.quantity; i++)
+            {
+                Vector2 offset = Random.insideUnitCircle * 0.5f;
+                Instantiate(entry.itemPrefab, (Vector2)transform.position + offset, Quaternion.identity);
+            }
         }
 
-        Debug.Log($"<color=green>Thu ho?ch {cropData.harvestQuantity}x {cropData.cropName}!</color>");
+        Debug.Log($"<color=green>Thu ho?ch {cropData.cropName}!</color>");
         Destroy(gameObject);
     }
 
@@ -91,9 +85,6 @@ public class FarmTile : MonoBehaviour, IInteractable
                 cropRenderer.enabled = false;
                 break;
             case FarmState.Seeded:
-                cropRenderer.enabled = true;
-                cropRenderer.sprite = cropData?.seedSprite;
-                break;
             case FarmState.Growing:
                 cropRenderer.enabled = true;
                 cropRenderer.sprite = cropData?.growingSprite;
@@ -105,7 +96,7 @@ public class FarmTile : MonoBehaviour, IInteractable
         }
     }
 
-    // ?? IInteractable ??????????????????????????????????????????????
+  
 
     public bool CanInteract()
     {
@@ -120,14 +111,14 @@ public class FarmTile : MonoBehaviour, IInteractable
             return;
         }
 
-        if (state == FarmState.Tilled)
-        {
-            // Tìm seed phù h?p trong hotbar/inventory c?a player
-            FarmingHandler handler = FindObjectOfType<FarmingHandler>();
-            if (handler != null)
-            {
-                handler.TryPlantSeed(this);
-            }
-        }
+        //if (state == FarmState.Tilled)
+        //{
+   
+        //    FarmingHandler handler = FindObjectOfType<FarmingHandler>();
+        //    if (handler != null)
+        //    {
+        //        handler.TryPlantSeed(this);
+        //    }
+        //}
     }
 }

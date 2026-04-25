@@ -1,14 +1,30 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;    
+public enum ItemType
+{
+    None,
+    Weapon,
+    Hoe,
+    Seed,
+    WateringCan,
+    Tool,
+    Consumable,
+    Material,
+    Quest
+}
 public class Item : MonoBehaviour
 {
     public int ID;
     public string Name;
     public int quantity = 1;
 
+    public ItemType itemType = ItemType.None;
     public GameObject worldPrefab;   // dùng khi drop ra map
     public GameObject uiPrefab;      // dùng khi vào inventory
+
+    // Chỉ dùng khi ItemType = Seed
+    [HideInInspector] public CropData cropData;
 
     [SerializeField] private TMP_Text quantityText;
 

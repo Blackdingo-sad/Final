@@ -3,23 +3,44 @@ using UnityEngine;
 public class MenuController : MonoBehaviour
 {
     public GameObject menuCanvas;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [Tooltip("Index of the Inventory tab in TabController.pages array")]
+    [SerializeField] private int inventoryTabIndex = 1;
+
+    private TabController tabController;
+
     void Start()
     {
         menuCanvas.SetActive(false);
+        tabController = menuCanvas.GetComponentInChildren<TabController>(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (!menuCanvas.activeSelf && PauseController.IsGamePaused)
-            {
                 return;
-            }
-            menuCanvas.SetActive(!menuCanvas.activeSelf);
-            PauseController.SetPause(menuCanvas.activeSelf);
+
+            if (menuCanvas.activeSelf)
+                CloseInventory();
+            else
+                OpenInventory();
         }
+    }
+
+    public void OpenInventory()
+    {
+        menuCanvas.SetActive(true);
+        PauseController.SetPause(true);
+        tabController?.ActivateTab(inventoryTabIndex);
+    }
+
+    public void CloseInventory()
+    {
+        menuCanvas.SetActive(false);
+        PauseController.SetPause(false);
+        tabController?.OnCloseMenu();
+        SeedSelectionManager.Instance?.CancelSelection();
     }
 }
