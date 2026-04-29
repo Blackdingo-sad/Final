@@ -9,7 +9,7 @@ public class ShopController : MonoBehaviour
     public GameObject shopPanel;
     public Transform shopInventoryGrid, playerInventoryGrid;
     public GameObject shopSlotPrefab;
-    public TMP_Text playerMoneyText, shopTitleText;
+    public TMP_Text shopTitleText;
 
     private ItemDictionary itemDictionary;
     private ShopNPC currentShop;
@@ -26,11 +26,6 @@ public class ShopController : MonoBehaviour
     {
         itemDictionary = FindFirstObjectByType<ItemDictionary>();
         shopPanel.SetActive(false);
-        if (CurrencyController.Instance != null)
-        { 
-            CurrencyController.Instance.OnGoldChanged += UpdateMoneyDisplay;
-            UpdateMoneyDisplay(CurrencyController.Instance.GetGold());
-        }
     }
 
     void Update()
@@ -46,14 +41,6 @@ public class ShopController : MonoBehaviour
             {
                 EventSystem.current.SetSelectedGameObject(null);
             }
-        }
-    }
-
-    private void UpdateMoneyDisplay(int amount)
-    {
-        if (playerMoneyText != null)
-        {
-            playerMoneyText.text = amount.ToString();
         }
     }
 

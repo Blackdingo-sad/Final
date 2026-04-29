@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class HotbarController : MonoBehaviour
 {
@@ -9,6 +12,10 @@ public class HotbarController : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private int slotCount = 8;
+
+    [Header("Lantern")]
+    [SerializeField] private GameObject lanternLight;
+
 
     private ItemDictionary itemDictionary;
 
@@ -58,37 +65,77 @@ public class HotbarController : MonoBehaviour
 
     private void HandleHotbarInput()
     {
-        // Số 1-8 để chọn slot
-        for (int i = 0; i < slotCount; i++)
+        if (Keyboard.current == null) return;
+
+        // Mảng key số tương ứng slot 1’9
+        var digitKeys = new[]
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            Keyboard.current.digit1Key,
+            Keyboard.current.digit2Key,
+            Keyboard.current.digit3Key,
+            Keyboard.current.digit4Key,
+            Keyboard.current.digit5Key,
+            Keyboard.current.digit6Key,
+            Keyboard.current.digit7Key,
+            Keyboard.current.digit8Key,
+            Keyboard.current.digit9Key,
+        };
+
+        for (int i = 0; i < slotCount && i < digitKeys.Length; i++)
+        {
+            if (digitKeys[i].wasPressedThisFrame)
             {
+                Debug.Log($"[Hotbar] Key {i + 1} → slot {i}");
                 selectedSlotIndex = i;
                 HighlightSelectedSlot();
+                UpdateLanternLight();
                 DebugSelectedItem();
+                return;
             }
         }
-        // Cuộn chuột
+
+        // Cuộn chuột (vẫn dùng old Input vì scroll chưa có API mới tiện)
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0f)
         {
             selectedSlotIndex = (selectedSlotIndex + 1) % slotCount;
             HighlightSelectedSlot();
+            UpdateLanternLight();
             DebugSelectedItem();
         }
         else if (scroll < 0f)
         {
             selectedSlotIndex = (selectedSlotIndex - 1 + slotCount) % slotCount;
             HighlightSelectedSlot();
+            UpdateLanternLight();
             DebugSelectedItem();
         }
     }
 
     private void HighlightSelectedSlot()
     {
-        // Có thể thêm hiệu ứng highlight UI ở đây nếu muốn
-        // Hiện tại để trống
+        if (hotbarPanel == null) return;
+        for (int i = 0; i < hotbarPanel.transform.childCount; i++)
+        {
+            Image img = hotbarPanel.transform.GetChild(i).GetComponent<Image>();
+            if (img != null)
+                img.color = (i == selectedSlotIndex) ? new Color(1f, 1f, 0.4f, 1f) : Color.white;
+        }
     }
+
+    private void UpdateLanternLight()
+    {
+        if (lanternLight == null)
+        {
+            Debug.LogWarning("[Hotbar] lanternLight is NULL — drag Spot Light 2D into the Lantern Light field on HotbarController");
+            return;
+        }
+        Item selected = GetSelectedItem();
+        bool shouldActivate = selected != null && selected.itemType == ItemType.Lantern;
+        lanternLight.SetActive(shouldActivate);
+        Debug.Log($"[Hotbar] LanternLight → {(shouldActivate ? "ON" : "OFF")} (selected: {selected?.Name ?? "none"})");
+    }
+
 
     public Item GetSelectedItem()
     {
@@ -106,13 +153,9 @@ public class HotbarController : MonoBehaviour
     {
         Item selected = GetSelectedItem();
         if (selected != null)
-        {
-            Debug.Log($"[Hotbar] Selected Item: {selected.itemType}: {selected.ID}, {selected.Name}");
-        }
+            Debug.Log($"[Hotbar] Slot {selectedSlotIndex + 1} → {selected.Name} (Type: {selected.itemType}, ID: {selected.ID})");
         else
-        {
-            Debug.Log("[Hotbar] Selected Item: None");
-        }
+            Debug.Log($"[Hotbar] Slot {selectedSlotIndex + 1} → trống");
     }
 
     private void InitializeHotbar()

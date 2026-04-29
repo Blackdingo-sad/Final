@@ -12,6 +12,7 @@ public class Enemy_Combat : MonoBehaviour
         if (playerHealth != null)
         {
             playerHealth.ChangeHealth(-damage);
+            Debug.Log($"<color=red>[{gameObject.name}] Hit Player for {damage} damage!</color>");
         }
     }
 }

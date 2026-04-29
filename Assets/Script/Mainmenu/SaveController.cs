@@ -1,4 +1,4 @@
-using Cinemachine;
+﻿using Cinemachine;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +12,10 @@ public class SaveController : MonoBehaviour
     private HotbarController hotbarController;
     private Chest[] chests;
     private ShopNPC[] shops;
+    private FieldPlot[] fieldPlots;
+    private WorldTime worldTime;
+
+
 
     void Start()
     {
@@ -26,6 +30,10 @@ public class SaveController : MonoBehaviour
         hotbarController = Object.FindFirstObjectByType<HotbarController>();
         chests = Object.FindObjectsByType<Chest>(FindObjectsSortMode.None);
         shops = FindObjectsOfType<ShopNPC>();
+        fieldPlots = Object.FindObjectsByType<FieldPlot>(FindObjectsSortMode.None);
+        worldTime = Object.FindFirstObjectByType<WorldTime>();
+
+
     }
 
     public void SaveGame()
@@ -71,7 +79,11 @@ public class SaveController : MonoBehaviour
             questProgressData = QuestController.Instance.GetQuestSaveData(),
             handinQuestIDs = QuestController.Instance.handinQuestIDs,
             playerGold = CurrencyController.Instance.GetGold(),
-            shopStates = GetShopStates()
+            shopStates = GetShopStates(),
+            cropSaveData = GetCropStates(),
+            worldTimeTicks = worldTime != null ? worldTime.GetCurrentTimeTicks() : 0L
+
+
         };
         File.WriteAllText(saveLocation, JsonUtility.ToJson(saveData));
     }
@@ -100,8 +112,20 @@ public class SaveController : MonoBehaviour
         return shopStates;
     }
 
+    private List<CropSaveData> GetCropStates()
+    {
+        List<CropSaveData> list = new List<CropSaveData>();
+        foreach (FieldPlot plot in fieldPlots)
+        {
+            if (plot != null)
+                list.Add(plot.GetSaveData());
+        }
+        return list;
+    }
+
     private List<ChestSaveData> GetChestStates()
     {
+
         List<ChestSaveData> chestStates = new List<ChestSaveData>();
         foreach (Chest chest in chests)
         {
@@ -157,12 +181,21 @@ public class SaveController : MonoBehaviour
             }
 
             LoadChestStates(saveData.chestSaveData ?? new List<ChestSaveData>());
+            LoadCropStates(saveData.cropSaveData ?? new List<CropSaveData>());
+
+            if (worldTime != null && saveData.worldTimeTicks > 0)
+                worldTime.SetCurrentTime(saveData.worldTimeTicks);
 
             LoadShopStates(saveData.shopStates);
+
+
             CurrencyController.Instance.SetGold(saveData.playerGold);
 
             QuestController.Instance.LoadQuestProgress(saveData.questProgressData);
-            QuestController.Instance.handinQuestIDs = saveData.handinQuestIDs;
+            QuestController.Instance.handinQuestIDs = saveData.handinQuestIDs ?? new List<string>();
+
+            // Delay 1 frame để đảm bảo mọi Start() đã chạy xong trước khi reset NPC
+            StartCoroutine(NotifyNPCsLoaded());
         }
         else
         {
@@ -172,6 +205,13 @@ public class SaveController : MonoBehaviour
             Debug.LogWarning("No save file found!");
             SaveGame();
         }
+    }
+
+    private System.Collections.IEnumerator NotifyNPCsLoaded()
+    {
+        yield return null; // chờ 1 frame
+        foreach (NPC npc in Object.FindObjectsByType<NPC>(FindObjectsSortMode.None))
+            npc.OnGameLoaded();
     }
 
     private void LoadShopStates(List<ShopInstanceData> shopStates)
@@ -199,8 +239,21 @@ public class SaveController : MonoBehaviour
         }
     }
 
+    private void LoadCropStates(List<CropSaveData> cropStates)
+    {
+        if (cropStates == null) return;
+        foreach (FieldPlot plot in fieldPlots)
+        {
+            if (plot == null) continue;
+            CropSaveData data = cropStates.Find(c => c.plotID == plot.PlotID);
+            if (data != null)
+                plot.LoadSaveData(data);
+        }
+    }
+
     private void LoadChestStates(List<ChestSaveData> chestSates)
     {
+
         foreach (Chest chest in chests)
         {
             ChestSaveData chestSaveData = chestSates.Find(c => c.ChestID == chest.ChestID);

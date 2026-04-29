@@ -11,7 +11,8 @@ public enum ItemType
     Tool,
     Consumable,
     Material,
-    Quest
+    Quest,
+    Lantern
 }
 public class Item : MonoBehaviour
 {

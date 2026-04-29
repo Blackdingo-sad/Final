@@ -11,7 +11,7 @@ public class NPC : MonoBehaviour, IInteractable
     private DialogueController dialogueUI;
     private int dialogueIndex;
     private bool isTyping, isDialogueActive;
-
+    private bool _questJustAccepted;
 
     private enum QuestState { NotStarted, InProgress, Completed }
     private QuestState questState = QuestState.NotStarted; 
@@ -79,6 +79,7 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         isDialogueActive = true;
+        _questJustAccepted = false;
 
         dialogueUI.SetNPCInfo(dialogueData.npcName, dialogueData.npcPortrait);
         dialogueUI.ShowDialogueUI(true);
@@ -89,21 +90,36 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void SyncQuestState()
     {
-        if (dialogueData.quest == null) return;
+        if (dialogueData == null || dialogueData.quest == null) return;
+        if (QuestController.Instance == null) return;
 
         string questID = dialogueData.quest.questID;
         if (QuestController.Instance.IsQuestCompleted(questID) || QuestController.Instance.IsQuestHandedIn(questID))
-        {
             questState = QuestState.Completed;
-        }
         else if (QuestController.Instance.IsQuestActive(questID))
-        {
             questState = QuestState.InProgress;
-        }
         else
-        {
             questState = QuestState.NotStarted;
+    }
+
+    // G?i sau khi LoadGame ?? reset tr?ng thái NPC v? ?úng v?i save data
+    public void OnGameLoaded()
+    {
+        // ?óng h?i tho?i n?u ?ang m? lúc load
+        if (isDialogueActive)
+        {
+            StopAllCoroutines();
+            isDialogueActive = false;
+            if (dialogueUI != null)
+            {
+                dialogueUI.ClearChoices();
+                dialogueUI.ShowDialogueUI(false);
+                dialogueUI.SetDialogueText(string.Empty);
+            }
+            PauseController.SetPause(false);
         }
+
+        SyncQuestState();
     }
 
     void NextLine()
@@ -182,6 +198,7 @@ public class NPC : MonoBehaviour, IInteractable
         {
             QuestController.Instance.AcceptQuest(dialogueData.quest);
             questState = QuestState.InProgress;
+            _questJustAccepted = true;
         }
 
         dialogueIndex = nextIndex;
@@ -197,14 +214,17 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void EndDialogue()
     {
-        // Auto hand-in quest when talking to NPC after completing quest
-        if (dialogueData.quest != null && questState == QuestState.Completed)
+        // Auto hand-in only if quest was already InProgress before this dialogue session
+        // _questJustAccepted prevents handin in the same session the quest was accepted
+        if (dialogueData.quest != null && questState != QuestState.NotStarted && !_questJustAccepted)
         {
             string questID = dialogueData.quest.questID;
-            if (QuestController.Instance.IsQuestCompleted(questID) && !QuestController.Instance.IsQuestHandedIn(questID))
+            bool completed = QuestController.Instance.IsQuestCompleted(questID);
+            bool handedIn  = QuestController.Instance.IsQuestHandedIn(questID);
+            Debug.Log($"[NPC EndDialogue] quest='{dialogueData.quest.questName}' completed={completed} handedIn={handedIn}");
+            if (completed && !handedIn)
             {
                 QuestController.Instance.HandInQuest(questID);
-                Debug.Log($"Quest '{dialogueData.quest.questName}' auto handed-in via NPC dialogue.");
             }
         }
 

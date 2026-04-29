@@ -1,4 +1,6 @@
 using System;
+using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CurrencyController : MonoBehaviour
@@ -7,6 +9,9 @@ public class CurrencyController : MonoBehaviour
     [SerializeField] private int startingGold = 100;
     private int playerGold = 100;
     public event Action<int> OnGoldChanged;
+
+    [Header("Gold Display Texts (Inventory, Shop, ...)")]
+    [SerializeField] private List<TMP_Text> goldDisplayTexts = new List<TMP_Text>();
 
     private void Awake()
     {
@@ -22,12 +27,14 @@ public class CurrencyController : MonoBehaviour
     }
 
     public int GetGold() => playerGold;
+
     public bool SpendGold(int amount)
     {
         if (playerGold >= amount)
         {
             playerGold -= amount;
             OnGoldChanged?.Invoke(playerGold);
+            RefreshDisplays();
             return true;
         }
         return false;
@@ -37,10 +44,19 @@ public class CurrencyController : MonoBehaviour
     {
         playerGold += amount;
         OnGoldChanged?.Invoke(playerGold);
+        RefreshDisplays();
     }
+
     public void SetGold(int amount)
     {
         playerGold = amount;
         OnGoldChanged?.Invoke(playerGold);
+        RefreshDisplays();
+    }
+
+    private void RefreshDisplays()
+    {
+        foreach (TMP_Text t in goldDisplayTexts)
+            if (t != null) t.text = playerGold.ToString();
     }
 }

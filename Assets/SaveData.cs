@@ -15,6 +15,8 @@ public class SaveData
 
     public int playerGold; // Lưu lượng vàng của player
     public List<ShopInstanceData> shopStates = new();
+    public List<CropSaveData> cropSaveData = new();
+    public long worldTimeTicks; // Lưu thời gian game (TimeSpan.Ticks)
 
 }
 
@@ -51,4 +53,13 @@ public class ObjectiveSaveData
 {
     public string objectiveID;
     public int currentAmount;
+}
+
+[System.Serializable]
+public class CropSaveData
+{
+    public string plotID;       // ID duy nhất của ô đất
+    public string cropName;     // Tên CropData (dùng để tìm lại ScriptableObject)
+    public int state;           // 0=Empty, 1=Growing, 2=ReadyToHarvest
+    public float growTimer;     // Thời gian còn lại (giây)
 }

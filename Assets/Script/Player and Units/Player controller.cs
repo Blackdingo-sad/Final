@@ -55,6 +55,7 @@ public class PlayerController2D : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (moveDir.magnitude < 0.01f) return; // nhượng quyền cho PlayerMovement khi không có input
         Vector2 dir = blocked ? Vector2.zero : moveDir;
         rb.MovePosition(rb.position + dir * moveSpeed * Time.fixedDeltaTime);
     }

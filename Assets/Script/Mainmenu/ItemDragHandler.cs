@@ -68,7 +68,7 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // Seed selection mode: click bất kỳ item nào để chọn trồng
+        // Seed selection mode
         if (SeedSelectionManager.Instance != null && SeedSelectionManager.Instance.IsSelecting)
         {
             Item item = GetComponent<Item>();
@@ -77,44 +77,80 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             return;
         }
 
-        if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))
+        // Ctrl + Click = split stack
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+        {
+            SplitStack();
             return;
+        }
+    }
+
+    void SplitStack()
+    {
+        Item item = GetComponent<Item>();
+        if (item == null || item.quantity <= 1) return;
 
         Slot currentSlot = transform.parent.GetComponent<Slot>();
         if (currentSlot == null) return;
 
-        // Xác định item đang ở inventory hay hotbar
-        InventoryController inventory = InventoryController.Instance;
-        HotbarController hotbar = Object.FindFirstObjectByType<HotbarController>();
+        int splitAmount = item.quantity / 2;
+        item.quantity -= splitAmount;
+        item.UpdateQuantityDisplay();
 
-        if (inventory == null || hotbar == null) return;
-
-        bool isInInventory = transform.parent.parent == inventory.inventoryPanel.transform;
-
-        if (isInInventory)
+        // Tìm slot trống gần nhất để đặt nửa còn lại
+        Slot emptySlot = FindEmptySlotAnywhere();
+        if (emptySlot == null)
         {
-            // Di chuyển từ inventory → hotbar slot trống đầu tiên
-            Slot targetSlot = hotbar.FindFirstEmptySlot();
-            if (targetSlot == null)
-            {
-                Debug.Log("[Ctrl+Click] Hotbar is full!");
-                return;
-            }
-            MoveToSlot(currentSlot, targetSlot);
-            Debug.Log($"[Ctrl+Click] Moved {gameObject.name} from Inventory → Hotbar");
+            // Không có slot trống → hoàn tác
+            item.quantity += splitAmount;
+            item.UpdateQuantityDisplay();
+            Debug.Log("[Split] Không có slot trống để đặt stack mới!");
+            return;
         }
-        else
+
+        SpawnSplitItem(item, splitAmount, emptySlot);
+        InventoryController.Instance?.RebuildItemCounts();
+        Debug.Log($"[Split] {item.Name}: {item.quantity} | {splitAmount}");
+    }
+
+    void SpawnSplitItem(Item sourceItem, int qty, Slot targetSlot)
+    {
+        ItemDictionary dict = Object.FindAnyObjectByType<ItemDictionary>();
+        if (dict == null) return;
+
+        GameObject prefab = dict.GetItemPrefab(sourceItem.ID);
+        if (prefab == null) return;
+
+        Item src = prefab.GetComponent<Item>();
+        GameObject uiPrefab = (src != null && src.uiPrefab != null) ? src.uiPrefab : prefab;
+
+        GameObject newObj = Instantiate(uiPrefab, targetSlot.transform);
+        newObj.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+        if (newObj.GetComponent<CanvasGroup>() == null) newObj.AddComponent<CanvasGroup>();
+        if (newObj.GetComponent<ItemDragHandler>() == null) newObj.AddComponent<ItemDragHandler>();
+
+        Item newItem = newObj.GetComponent<Item>();
+        if (newItem != null)
         {
-            // Di chuyển từ hotbar → inventory slot trống đầu tiên
-            Slot targetSlot = FindFirstEmptySlotInPanel(inventory.inventoryPanel.transform);
-            if (targetSlot == null)
-            {
-                Debug.Log("[Ctrl+Click] Inventory is full!");
-                return;
-            }
-            MoveToSlot(currentSlot, targetSlot);
-            Debug.Log($"[Ctrl+Click] Moved {gameObject.name} from Hotbar → Inventory");
+            newItem.ID = sourceItem.ID;
+            newItem.quantity = qty;
+            newItem.UpdateQuantityDisplay();
         }
+        targetSlot.currentItem = newObj;
+    }
+
+    Slot FindEmptySlotAnywhere()
+    {
+        // Tìm trong Inventory trước
+        if (InventoryController.Instance != null)
+        {
+            Slot s = FindFirstEmptySlotInPanel(InventoryController.Instance.inventoryPanel.transform);
+            if (s != null) return s;
+        }
+        // Rồi tìm trong Hotbar
+        Slot hs = HotbarController.Instance?.FindFirstEmptySlot();
+        return hs;
     }
 
     void MoveToSlot(Slot fromSlot, Slot toSlot)
@@ -160,6 +196,27 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             Canvas parentCanvas = GetComponentInParent<Canvas>();
             if (parentCanvas != null) rootCanvas = parentCanvas.rootCanvas;
             if (rootCanvas == null) return;
+        }
+
+        // Ctrl + Drag = split: tách nửa stack, giữ phần còn lại trong slot gốc
+        Item item = GetComponent<Item>();
+        if (item != null && item.quantity > 1 &&
+            (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)))
+        {
+            int splitAmount = item.quantity / 2;
+            int remaining   = item.quantity - splitAmount;
+
+            Slot origSlot = originalParent.GetComponent<Slot>();
+            if (origSlot != null)
+            {
+                // Tạo item mới với số lượng còn lại, đặt vào slot gốc
+                SpawnSplitItem(item, remaining, origSlot);
+            }
+
+            // Item hiện tại chỉ còn splitAmount để drag
+            item.quantity = splitAmount;
+            item.UpdateQuantityDisplay();
+            Debug.Log($"[Split-Drag] Dragging {splitAmount}, left {remaining} in slot");
         }
 
         // Lưu lại vị trí thực tế trước khi đổi parent
@@ -248,19 +305,31 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 return;
             }
 
-            // slot có item -> swap
-            GameObject targetItem = dropSlot.currentItem;
-            dropSlot.currentItem = gameObject;
-            originalSlot.currentItem = targetItem;
+            // slot có item
+            Item draggedItem = GetComponent<Item>();
+            Item targetItem  = dropSlot.currentItem.GetComponent<Item>();
 
-            if (targetItem != null)
+            // Cùng loại → combine stack
+            if (draggedItem != null && targetItem != null && draggedItem.ID == targetItem.ID)
             {
-                targetItem.transform.SetParent(originalSlot.transform);
-                RectTransform targetRect = targetItem.GetComponent<RectTransform>();
-                if (targetRect != null)
-                {
-                    targetRect.anchoredPosition = Vector2.zero;
-                }
+                targetItem.AddToStack(draggedItem.quantity);
+                originalSlot.currentItem = null;
+                Destroy(gameObject);
+                InventoryController.Instance?.RebuildItemCounts();
+                Debug.Log($"[Combine] {targetItem.Name} x{targetItem.quantity}");
+                return;
+            }
+
+            // Khác loại → swap
+            GameObject targetObj = dropSlot.currentItem;
+            dropSlot.currentItem = gameObject;
+            originalSlot.currentItem = targetObj;
+
+            if (targetObj != null)
+            {
+                targetObj.transform.SetParent(originalSlot.transform);
+                RectTransform targetRect = targetObj.GetComponent<RectTransform>();
+                if (targetRect != null) targetRect.anchoredPosition = Vector2.zero;
             }
 
             transform.SetParent(dropSlot.transform);

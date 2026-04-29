@@ -7,6 +7,10 @@ public class FieldPlot : MonoBehaviour, IInteractable
     [Header("Crop Visual (child GameObject)")]
     [SerializeField] private SpriteRenderer cropRenderer;
 
+    [Header("Plot Identity")]
+    [SerializeField] private string plotID; // ID duy nhất, tự động tạo nếu để trống
+
+
     private PlotState _state = PlotState.Empty;
     private SpriteRenderer _plotRenderer;
     private float _growTimer;
@@ -14,7 +18,12 @@ public class FieldPlot : MonoBehaviour, IInteractable
 
     void Awake()
     {
+        // Tự động tạo plotID dựa theo vị trí nếu chưa có
+        if (string.IsNullOrEmpty(plotID))
+            plotID = $"plot_{transform.position.x:F2}_{transform.position.y:F2}";
+
         _plotRenderer = GetComponent<SpriteRenderer>();
+
 
         // Auto-create child crop renderer if not assigned
         if (cropRenderer == null)
@@ -172,7 +181,44 @@ public class FieldPlot : MonoBehaviour, IInteractable
         }
     }
 
+    public CropSaveData GetSaveData()
+    {
+        return new CropSaveData
+        {
+            plotID    = plotID,
+            cropName  = _cropData != null ? _cropData.cropName : string.Empty,
+            state     = (int)_state,
+            growTimer = _growTimer
+        };
+    }
+
+    public void LoadSaveData(CropSaveData data)
+    {
+        if (data == null) return;
+
+        _growTimer = data.growTimer;
+
+        if (data.state != (int)PlotState.Empty && !string.IsNullOrEmpty(data.cropName))
+        {
+            // Tìm CropData ScriptableObject theo tên
+            CropData[] allCrops = Resources.FindObjectsOfTypeAll<CropData>();
+            foreach (CropData cd in allCrops)
+            {
+                if (cd.cropName == data.cropName)
+                {
+                    _cropData = cd;
+                    break;
+                }
+            }
+        }
+
+        SetState((PlotState)data.state);
+    }
+
+    public string PlotID => plotID;
+
     void TriggerPlayerAnimation(string animName)
+
     {
         PlayerFarming farming = Object.FindFirstObjectByType<PlayerFarming>();
         farming?.PlayFarmAnimation(animName);

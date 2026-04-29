@@ -51,6 +51,10 @@ public class MapTransation : MonoBehaviour
             UpdatePlayerPosition(player);
             Physics2D.SyncTransforms();
 
+            // M?i l?n chuy?n map trôi thêm 2 phút trong game
+            WorldTime worldTime = FindFirstObjectByType<WorldTime>();
+            worldTime?.AddMinutes(2);
+
             if (confiner != null && mapBoundry != null)
             {
                 confiner.m_BoundingShape2D = mapBoundry;

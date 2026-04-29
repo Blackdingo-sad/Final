@@ -58,9 +58,6 @@ public class InteractionDetector : MonoBehaviour
 
         interactableInRange = nearest;
         interactionIcon.SetActive(interactableInRange != null);
-
-        if (interactableInRange != null)
-            Debug.Log($"[InteractionDetector] Nearest interactable: {(interactableInRange as MonoBehaviour)?.gameObject.name} ({nearestDist:F2}m)");
     }
 
     private IInteractable FindInteractable(Collider2D collision)

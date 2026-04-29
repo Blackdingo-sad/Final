@@ -22,6 +22,7 @@ public class Enemy_Movement : MonoBehaviour
     private Vector2 originalColliderOffset; // l?u offset g?c ?? flip ?úng
 
     private bool playerInRange = false; // ch? ?u?i khi player trong vùng phát hi?n
+    private bool hasBeenHit = false; // m?t khi b? damage, lu\u00f4n ?u?i player
 
     private void Awake()
     {
@@ -51,7 +52,7 @@ public class Enemy_Movement : MonoBehaviour
     {
         if (PauseController.IsGamePaused) return;
 
-        if (target != null && playerInRange)
+        if (target != null && (playerInRange || hasBeenHit))
         {
             Vector3 direction = (target.position - transform.position).normalized;
             moveDirection = direction;
@@ -83,7 +84,7 @@ public class Enemy_Movement : MonoBehaviour
             return;
         }
 
-        rb.linearVelocity = playerInRange ? moveDirection * moveSpeed : Vector2.zero;
+        rb.linearVelocity = (playerInRange || hasBeenHit) ? moveDirection * moveSpeed : Vector2.zero;
     }
 
     // Player b??c vào vùng CircleCollider2D ? b?t ??u ?u?i
@@ -93,22 +94,38 @@ public class Enemy_Movement : MonoBehaviour
         {
             target = collision.transform;
             playerInRange = true;
+            Debug.Log($"<color=orange>[{gameObject.name}] Detected player — starting chase!</color>");
         }
     }
 
-    // Player ra kh?i vùng CircleCollider2D ? d?ng ?u?i
+    // Player ra kh?i vùng CircleCollider2D ? d?ng ?u?i (ch? khi ch?a b? damage)
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             playerInRange = false;
-            target = null;
-            moveDirection = Vector2.zero;
+            if (!hasBeenHit)
+            {
+                target = null;
+                moveDirection = Vector2.zero;
+                Debug.Log($"<color=grey>[{gameObject.name}] Lost player — stopping chase.</color>");
+            }
         }
     }
 
     public void TakeDamage(float damage)
     {
+        if (!hasBeenHit)
+        {
+            hasBeenHit = true;
+            // T?m player n?u ch?a c?
+            if (target == null)
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                if (player != null) target = player.transform;
+            }
+            Debug.Log($"<color=red>[{gameObject.name}] First hit! Now chasing player forever!</color>");
+        }
         health -= damage;
         Debug.Log($"<color=red>{gameObject.name} took {damage} damage. Health: {health}/{maxHealth}</color>");
         

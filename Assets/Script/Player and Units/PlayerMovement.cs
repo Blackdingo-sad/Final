@@ -98,6 +98,10 @@ public class PlayerMovement : MonoBehaviour
             float angle = Mathf.Atan2(lastDirection.y, lastDirection.x) * Mathf.Rad2Deg;
             Aim.rotation = Quaternion.Euler(0f, 0f, angle);
         }
+
+        // Debug ray h??ng di chuy?n (ch? hi?n trong Editor)
+        Vector2 debugDir = moveInput.magnitude > 0.1f ? moveInput.normalized : lastDirection;
+        Debug.DrawRay(transform.position, debugDir * 1.5f, Color.cyan);
     }
     private void FixedUpdate()
     {

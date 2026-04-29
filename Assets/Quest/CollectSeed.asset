@@ -22,3 +22,8 @@ MonoBehaviour:
     targetItemIDs: 0100000002000000
     requiredAmount: 5
     currentAmount: 0
+  rewards:
+  - rewardType: 1
+    itemID: 0
+    itemQuantity: 0
+    goldAmount: 50

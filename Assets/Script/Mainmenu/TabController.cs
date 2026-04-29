@@ -13,6 +13,8 @@ public class TabController : MonoBehaviour
     {
         DisablePageRaycast();
         ActivateTab(0);
+        // Menu starts closed, so restore itemPopupContainer
+        OnCloseMenu();
     }
 
     // T?t Raycast Target trên t?t c? background Image trong các page

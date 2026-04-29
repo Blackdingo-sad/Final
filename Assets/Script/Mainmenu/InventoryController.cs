@@ -160,6 +160,58 @@ public class InventoryController : MonoBehaviour
         Debug.Log("Inventory full! Cannot add item: " + itemPrefab.name);
         return false; // Inventory full
     }
+
+    public bool AddItemToInventory(int itemID, int quantity)
+    {
+        ItemDictionary dict = UnityEngine.Object.FindAnyObjectByType<ItemDictionary>();
+        if (dict == null) return false;
+
+        GameObject prefab = dict.GetItemPrefab(itemID);
+        if (prefab == null) return false;
+
+        // Tìm slot ?ã có item cùng ID ?? stack
+        foreach (Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if (slot?.currentItem == null) continue;
+            Item slotItem = slot.currentItem.GetComponent<Item>();
+            if (slotItem != null && slotItem.ID == itemID)
+            {
+                slotItem.AddToStack(quantity);
+                RebuildItemCounts();
+                return true;
+            }
+        }
+
+        // Không có stack ? t?o m?i trong slot tr?ng
+        Item src = prefab.GetComponent<Item>();
+        GameObject uiPrefab = (src != null && src.uiPrefab != null) ? src.uiPrefab : prefab;
+
+        foreach (Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if (slot == null || slot.currentItem != null) continue;
+
+            GameObject newObj = Instantiate(uiPrefab, slot.transform);
+            newObj.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            if (newObj.GetComponent<CanvasGroup>() == null) newObj.AddComponent<CanvasGroup>();
+            if (newObj.GetComponent<ItemDragHandler>() == null) newObj.AddComponent<ItemDragHandler>();
+
+            Item newItem = newObj.GetComponent<Item>();
+            if (newItem != null)
+            {
+                newItem.ID = itemID;
+                newItem.quantity = quantity;
+                newItem.UpdateQuantityDisplay();
+            }
+            slot.currentItem = newObj;
+            RebuildItemCounts();
+            return true;
+        }
+
+        Debug.LogWarning($"[QuestReward] Inventory full, cannot give item ID {itemID}");
+        return false;
+    }
     public List<InventorySaveData> GetInventoryItems()
     {
         List<InventorySaveData> invData = new List<InventorySaveData>();
