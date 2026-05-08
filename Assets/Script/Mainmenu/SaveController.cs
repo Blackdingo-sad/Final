@@ -7,6 +7,8 @@ using UnityEngine.Rendering;
 
 public class SaveController : MonoBehaviour
 {
+    public static SaveController Instance { get; private set; }
+
     private string saveLocation;
     private InventoryController inventoryController;
     private HotbarController hotbarController;
@@ -19,6 +21,8 @@ public class SaveController : MonoBehaviour
 
     void Start()
     {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
         InitializeComponents();
         LoadGame();
     }

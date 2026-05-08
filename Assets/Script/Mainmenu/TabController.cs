@@ -45,6 +45,9 @@ public class TabController : MonoBehaviour
     {
         Debug.Log($"ActivateTab called with index: {tabNO}");
 
+        // Xóa popup item trước khi ẩn container
+        ItemPickupUIController.Instance?.ClearAllPopups();
+
         // ?n ItemPopupContainer khi chuy?n tab ?? tránh b? che
         if (itemPopupContainer != null)
         {

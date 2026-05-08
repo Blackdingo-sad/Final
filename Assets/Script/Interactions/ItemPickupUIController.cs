@@ -47,6 +47,17 @@ public class ItemPickupUIController : MonoBehaviour
         StartCoroutine(FadeOutAndDestroy(newPopup));    
     }
 
+    // Xóa t?t c? popup ?ang hi?n th? (g?i khi m? inventory tab)
+    public void ClearAllPopups()
+    {
+        while (activePopups.Count > 0)
+        {
+            GameObject popup = activePopups.Dequeue();
+            if (popup != null) Destroy(popup);
+        }
+        StopAllCoroutines();
+    }
+
     private IEnumerator FadeOutAndDestroy(GameObject popup)
     {
         yield return new WaitForSeconds(popupDuration);

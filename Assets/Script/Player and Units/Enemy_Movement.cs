@@ -39,13 +39,15 @@ public class Enemy_Movement : MonoBehaviour
             detectionCollider.isTrigger = true; // ??m b?o là trigger ?? detect player
             originalColliderOffset = detectionCollider.offset;
         }
+
+        // Kh?i t?o máu trong Awake ?? ??m b?o ch?y ngay c? khi component b? disable tr??c Start
+        health = maxHealth;
     }
 
     void Start()
     {
         // Không t? tìm player n?a, ch? player b??c vào CircleCollider2D
         // target = GameObject.FindGameObjectWithTag("Player").transform;
-        health = maxHealth;
     }
 
     void Update()
@@ -118,7 +120,12 @@ public class Enemy_Movement : MonoBehaviour
         if (!hasBeenHit)
         {
             hasBeenHit = true;
-            // T?m player n?u ch?a c?
+            // N?u ?ây là raid enemy, chuy?n sang ch? ?? ?u?i player
+            RaidEnemy raidBehavior = GetComponent<RaidEnemy>();
+            if (raidBehavior != null)
+                raidBehavior.SwitchToChaseMode();
+
+            // Tìm player n?u ch?a có
             if (target == null)
             {
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -128,10 +135,10 @@ public class Enemy_Movement : MonoBehaviour
         }
         health -= damage;
         Debug.Log($"<color=red>{gameObject.name} took {damage} damage. Health: {health}/{maxHealth}</color>");
-        
+
         if (flashOnHit && spriteRenderer != null)
             StartCoroutine(FlashHit());
-        
+
         if (health <= 0)
         {
             Debug.Log($"<color=yellow>{gameObject.name} died!</color>");

@@ -15,6 +15,7 @@ public class FieldPlot : MonoBehaviour, IInteractable
     private SpriteRenderer _plotRenderer;
     private float _growTimer;
     private CropData _cropData;
+    private bool _isBeingRaided = false;
 
     void Awake()
     {
@@ -51,7 +52,7 @@ public class FieldPlot : MonoBehaviour, IInteractable
 
     void Update()
     {
-        if (_state != PlotState.Growing) return;
+        if (_state != PlotState.Growing || _isBeingRaided) return;
 
         _growTimer -= Time.deltaTime;
         if (_growTimer <= 0f)
@@ -216,6 +217,42 @@ public class FieldPlot : MonoBehaviour, IInteractable
     }
 
     public string PlotID => plotID;
+    public bool HasCrops => _state != PlotState.Empty;
+    public bool IsBeingRaided => _isBeingRaided;
+
+    // Gọi bởi RaidEnemy khi bắt đầu phá hủy cây
+    public void StartRaidDestruction(Sprite damagedSprite)
+    {
+        if (_isBeingRaided) return;
+        _isBeingRaided = true;
+        if (cropRenderer != null && damagedSprite != null)
+        {
+            cropRenderer.sprite = damagedSprite;
+            cropRenderer.gameObject.SetActive(true);
+        }
+        Debug.Log($"<color=orange>[FieldPlot] {name} is being raided!</color>");
+    }
+
+    // Gọi khi enemy bị tiêu diệt hoặc rời đi — hủy raid
+    public void CancelRaidDestruction()
+    {
+        if (!_isBeingRaided) return;
+        _isBeingRaided = false;
+        UpdateCropVisual();
+        Debug.Log($"[FieldPlot] Raid on {name} was cancelled.");
+    }
+
+    // Gọi khi đếm ngược xong — cây bị phá hủy hoàn toàn
+    public void FinishRaidDestruction()
+    {
+        _isBeingRaided = false;
+        _cropData = null;
+        _growTimer = 0f; // Reset timer để không ảnh hưởng lần trồng tiếp theo
+        SetState(PlotState.Empty);
+        Debug.Log($"<color=red>[FieldPlot] {name} crop was destroyed by raid enemy!</color>");
+        // Auto-save để trạng thái Empty được giữ khi đổi scene
+        SaveController.Instance?.SaveGame();
+    }
 
     void TriggerPlayerAnimation(string animName)
 
