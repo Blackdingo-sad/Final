@@ -231,6 +231,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   moveSpeed: 2
-  maxHealth: 100
+  maxHealth: 20
   flashOnHit: 1
   hitColor: {r: 1, g: 0, b: 0, a: 1}

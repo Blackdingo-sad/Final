@@ -32,14 +32,14 @@ public class MenuController : MonoBehaviour
     public void OpenInventory()
     {
         menuCanvas.SetActive(true);
-        PauseController.SetPause(true);
+        PauseController.SetPause(true, freezeTime: true);
         tabController?.ActivateTab(inventoryTabIndex);
     }
 
     public void CloseInventory()
     {
         menuCanvas.SetActive(false);
-        PauseController.SetPause(false);
+        PauseController.SetPause(false, freezeTime: true);
         tabController?.OnCloseMenu();
         SeedSelectionManager.Instance?.CancelSelection();
     }

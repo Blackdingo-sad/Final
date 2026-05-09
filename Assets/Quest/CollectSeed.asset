@@ -19,7 +19,8 @@ MonoBehaviour:
   - objectiveID: 1
     description: Collect 5 Seeds
     type: 0
-    targetItemIDs: 0100000002000000
+    targetItemIDs: 020000000400000006000000080000000a000000
+    targetEnemyPrefab: {fileID: 0}
     requiredAmount: 5
     currentAmount: 0
   rewards:

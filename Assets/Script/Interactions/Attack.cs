@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class Attack : MonoBehaviour
@@ -9,6 +9,10 @@ public class Attack : MonoBehaviour
     public float damage = 5f;
     public float fireRate = 0.3f;
 
+    [Header("Required Hotbar Item")]
+    [Tooltip("Chi cho phep tan cong khi dang trang bi item co ItemType nay trong HotBar")]
+    public ItemType requiredItemType = ItemType.Weapon;
+
     private float _nextFireTime;
 
     private void Update()
@@ -17,9 +21,28 @@ public class Attack : MonoBehaviour
 
         if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0)) && Time.time >= _nextFireTime)
         {
+            if (!IsRequiredItemEquipped()) return;
             Shoot();
             _nextFireTime = Time.time + fireRate;
         }
+    }
+
+    private bool IsRequiredItemEquipped()
+    {
+        Item selected = HotbarController.Instance?.GetSelectedItem();
+        if (selected == null || selected.itemType != requiredItemType)
+        {
+            Debug.Log(
+"[Attack] Cannot attack â€” need equip: "
+ + requiredItemType + 
+" | Current: "
+ + (selected?.itemType.ToString() ?? 
+"empty"
+));
+            return false;
+        }
+        return 
+true;
     }
 
     void Shoot()
@@ -30,7 +53,6 @@ public class Attack : MonoBehaviour
             return;
         }
 
-        // L?y v? trí chu?t trong world space
         Vector3 mouseScreen = Input.mousePosition;
         mouseScreen.z = Mathf.Abs(Camera.main.transform.position.z);
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
@@ -39,15 +61,12 @@ public class Attack : MonoBehaviour
         Vector3 origin = firePoint != null ? firePoint.position : transform.position;
         origin.z = 0f;
 
-        // Tính h??ng t? player (transform g?c) ??n chu?t, không dùng firePoint
-        // ?? tránh sai l?ch do camera offset/look-ahead
         Vector3 playerPos = transform.position;
         playerPos.z = 0f;
         Vector2 direction = (mouseWorld - playerPos).normalized;
 
         GameObject bullet = Instantiate(bulletPrefab, origin, Quaternion.identity);
 
-        // Xoay bullet sprite theo h??ng
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 

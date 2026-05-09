@@ -46,6 +46,10 @@ public class QuestObjectives
     public ObjectiveType type;
 
     public List<int> targetItemIDs;
+
+    [Tooltip("Chi dung khi type = DefeatEnemy. Keo Prefab enemy vao day.")]
+    public GameObject targetEnemyPrefab;
+
     public int requiredAmount;
     public int currentAmount;
 
@@ -68,12 +72,13 @@ public class QuestProgress
         {
             objectives.Add(new QuestObjectives
             {
-                objectiveID = obj.objectiveID,
-                description = obj.description,
-                type = obj.type,
-                targetItemIDs = new List<int>(obj.targetItemIDs ?? new List<int>()),
-                requiredAmount = obj.requiredAmount,
-                currentAmount = 0    
+                objectiveID      = obj.objectiveID,
+                description      = obj.description,
+                type             = obj.type,
+                targetItemIDs    = new List<int>(obj.targetItemIDs ?? new List<int>()),
+                targetEnemyPrefab = obj.targetEnemyPrefab,
+                requiredAmount   = obj.requiredAmount,
+                currentAmount    = 0
             });
         }
     }

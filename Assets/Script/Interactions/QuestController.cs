@@ -111,6 +111,53 @@ public class QuestController : MonoBehaviour
         return quest != null && quest.objectives.TrueForAll(o => o.IsCompleted);
     }
 
+    /// <summary>
+    /// Goi khi mot enemy bi tieu diet.
+    /// So sanh ten prefab voi targetEnemyPrefab trong objective de tinh tien do.
+    /// </summary>
+    public void OnEnemyKilled(GameObject killedEnemy)
+    {
+        if (killedEnemy == null) return;
+
+        string enemyBaseName = killedEnemy.name;
+        enemyBaseName = enemyBaseName.Replace("(Clone)", "").Trim();
+        enemyBaseName = System.Text.RegularExpressions.Regex.Replace(enemyBaseName, @"\s*\(\d+\)$", "").Trim();
+
+        Debug.Log($"[Quest] OnEnemyKilled: raw='{killedEnemy.name}' base='{enemyBaseName}' | Active quests: {activateQuests.Count}");
+
+        bool anyChanged = false;
+
+        foreach (QuestProgress questProgress in activateQuests)
+        {
+            if (questProgress?.objectives == null) continue;
+
+            foreach (QuestObjectives obj in questProgress.objectives)
+            {
+                if (obj == null) continue;
+                if (obj.type != ObjectiveType.DefeatEnemy) continue;
+                if (obj.IsCompleted) continue;
+
+                if (obj.targetEnemyPrefab == null)
+                {
+                    Debug.LogWarning($"[Quest] Objective '{obj.description}' has no targetEnemyPrefab assigned!");
+                    continue;
+                }
+
+                Debug.Log($"[Quest] Comparing: '{enemyBaseName}' vs prefab '{obj.targetEnemyPrefab.name}'");
+
+                if (enemyBaseName == obj.targetEnemyPrefab.name)
+                {
+                    obj.currentAmount++;
+                    anyChanged = true;
+                    Debug.Log($"<color=green>[Quest] Killed '{enemyBaseName}' counted! {obj.currentAmount}/{obj.requiredAmount}</color>");
+                }
+            }
+        }
+
+        if (anyChanged)
+            questUI?.UpdateQuestUI();
+    }
+
     public void HandInQuest(string questID)
     {
         if (!RemoveRequiredItemsForQuest(questID))

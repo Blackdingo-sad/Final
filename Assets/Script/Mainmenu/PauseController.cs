@@ -27,8 +27,16 @@ public class PauseController : MonoBehaviour
     //    }
     //}
     public static bool IsGamePaused { get; private set; } = false;
-    public static void SetPause(bool pause)
+
+    /// <summary>
+    /// pause = true/false.
+    /// freezeTime = true: set Time.timeScale = 0 (dung cho inventory).
+    /// freezeTime = false: giu timeScale binh thuong (dung cho map transition / fade).
+    /// </summary>
+    public static void SetPause(bool pause, bool freezeTime = false)
     {
         IsGamePaused = pause;
+        if (freezeTime)
+            Time.timeScale = pause ? 0f : 1f;
     }
 }

@@ -266,7 +266,7 @@ MonoBehaviour:
   uiPrefab: {fileID: 0}
   cropData: {fileID: 0}
   quantityText: {fileID: 0}
-  buyPrice: 200
+  buyPrice: 20
   sellPriceMultiplier: 0.5
 --- !u!212 &-4596209460037908803
 SpriteRenderer:
